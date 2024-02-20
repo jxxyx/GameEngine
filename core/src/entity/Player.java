@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Color;
+// import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -65,43 +65,39 @@ public class Player extends Entity{
 		if(playerControl.upPressed == true || playerControl.downPressed == true || playerControl.leftPressed == true || playerControl.rightPressed == true) {
 			if(playerControl.upPressed == true) {
 				direction = "up";
-				worldY -= speed; // THIS line will be moved to the bottom collision checker function, y will become worldY 
 			}
 			else if(playerControl.downPressed == true) {
 				direction = "down";
-				worldY += speed; // THIS line will be moved to the bottom collision checker function, y will become worldY
 			}
 			else if(playerControl.leftPressed == true) {
 				direction = "left";
-				worldX -= speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
 			}
 			else if(playerControl.rightPressed == true) {
 				direction = "right";
-				worldX += speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
 			}
 			
-//			// CHECK TILE COLLISION
-//			collisionOn = false;
-//			gp.cChecker.checkTile(this);
-//			
-//			// IF COLLISION IS FALSE, PLAYER CAN MOVE
-//			if(collisionOn == false) {
-//				
-//				switch(direction) {
-//				case "up":
-//					y -= speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (y to worldY)
-//					break;
-//				case "down":
-//					y += speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (y to worldY)
-//					break;
-//				case "left":
-//					x -= speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (x to worldX)
-//					break;
-//				case "right":
-//					x += speed;// HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (x to worldX)
-//					break;
-//				}
-//			}
+			// CHECK TILE COLLISION
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			// IF COLLISION IS FALSE, PLAYER CAN MOVE
+			if(collisionOn == false) {
+				
+				switch(direction) {
+				case "up":
+					worldY -= speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (y to worldY)
+					break;
+				case "down":
+					worldY += speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (y to worldY)
+					break;
+				case "left":
+					worldX -= speed; // HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (x to worldX)
+					break;
+				case "right":
+					worldX += speed;// HELP ME MODIFY THIS LIKE IF CAN, THANK YOU (x to worldX)
+					break;
+				}
+			}
 			
 			spriteCounter++;
 			if(spriteCounter > 12) {
