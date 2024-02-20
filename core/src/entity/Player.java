@@ -16,11 +16,17 @@ public class Player extends Entity{
 	GamePanel gp;
 	PlayerControl playerControl;
 	
+	public final int screenX;
+	public final int screenY;
+
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		
 		this.gp = gp;
 		this.playerControl = playerControl;
 		
+		//return the halfway point of the screen
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
 		//Collision part
 		solidArea = new Rectangle(8, 16, 32, 32);
@@ -31,8 +37,8 @@ public class Player extends Entity{
 	
 	public void setDefaultValues() {
 		
-		x=100;
-		y=100;
+		worldX = gp.tileSize * 23;
+		worldY = gp.tileSize * 21;
 		speed= 4;
 		direction = "down";
 	}
@@ -59,19 +65,19 @@ public class Player extends Entity{
 		if(playerControl.upPressed == true || playerControl.downPressed == true || playerControl.leftPressed == true || playerControl.rightPressed == true) {
 			if(playerControl.upPressed == true) {
 				direction = "up";
-				y -= speed; // THIS line will be moved to the bottom collision checker function, y will become worldY 
+				worldY -= speed; // THIS line will be moved to the bottom collision checker function, y will become worldY 
 			}
 			else if(playerControl.downPressed == true) {
 				direction = "down";
-				y += speed; // THIS line will be moved to the bottom collision checker function, y will become worldY
+				worldY += speed; // THIS line will be moved to the bottom collision checker function, y will become worldY
 			}
 			else if(playerControl.leftPressed == true) {
 				direction = "left";
-				x -= speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
+				worldX -= speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
 			}
 			else if(playerControl.rightPressed == true) {
 				direction = "right";
-				x += speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
+				worldX += speed; // THIS line will be moved to the bottom collision checker function, x will become worldX
 			}
 			
 //			// CHECK TILE COLLISION
@@ -153,7 +159,7 @@ public class Player extends Entity{
 			break;
 		}
 		
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 		
 		
 	}
