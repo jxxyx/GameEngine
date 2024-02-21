@@ -7,6 +7,8 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import com.badlogic.gdx.audio.Sound;
+
 import entity.Player;
 import tile.TileManager;
 import object.SuperObject;

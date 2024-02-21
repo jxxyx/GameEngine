@@ -1,9 +1,10 @@
 package com.mygdx.game;
 
-import object.Obj_Boots;
+
 import object.Obj_Chest;
 import object.Obj_Door;
 import object.Obj_key;
+import object.Obj_Boots;
 
 public class AssetSetter {
     
