@@ -4,7 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "GameEngine",
+            "request": "launch",
+            "mainClass": "com.mygdx.game.GameEngine",
+            "projectName": "core"
+        },
         {
             "type": "java",
             "name": "Current File",
