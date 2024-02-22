@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// SYSTEM
 	TileManager tileM = new TileManager(this);
-	PlayerControl playerControl = new PlayerControl();
+	PlayerControl playerControl = new PlayerControl(this);
 	customSound music = new customSound();
 	customSound SE = new customSound();
 	public CollisionManager cChecker = new CollisionManager(this);
