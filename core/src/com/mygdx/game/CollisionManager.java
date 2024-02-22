@@ -169,7 +169,8 @@ public class CollisionManager {
 					break;
 				case "right":
 					entity.solidArea.x += entity.speed;
-					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+					
+					if (entity.solidArea.intersects(target[i].solidArea)) {
 						entity.collisionOn = true;
 						index = i;
 					}

@@ -46,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public CollisionManager cChecker = new CollisionManager(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
+	public MenuPanel mp = new MenuPanel(this);
 	Thread gameThread;
 
 	// ENTITY OBJECT
@@ -70,8 +71,8 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		aSetter.setObject();
 		aSetter.setNPC();
-		
-		playMusic(0);
+		//playMusic(0);
+		gameState = titleState;
 	}
 
 
@@ -125,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
+		
 		if(gameState == pauseState) {
 			//nothing
 		}
@@ -137,12 +139,11 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		// TITLE SCREEN
 		if(gameState == titleState) {
-			ui.draw(g2);
+			mp.draw(g2);
 		}
 		// OTHERS
 		else {
 			// This is like a layer
-			// Tile
 			tileM.draw(g2);
 
 			// Object
@@ -166,9 +167,6 @@ public class GamePanel extends JPanel implements Runnable{
 			ui.draw(g2);
 		}
 		
-
-		
-		g2.dispose();
 	}
 	public void playMusic(int i) {
 		music.setFile(i);
