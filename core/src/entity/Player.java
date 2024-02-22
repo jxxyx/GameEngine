@@ -12,7 +12,6 @@ import com.mygdx.game.PlayerControl;
 
 public class Player extends Entity{
 	
-	GamePanel gp;
 	PlayerControl playerControl;
 	
 	public final int screenX;
@@ -20,8 +19,8 @@ public class Player extends Entity{
 	public int hasKey = 0;
 	
 	public Player(GamePanel gp, PlayerControl playerControl) {
+		super(gp);
 		
-		this.gp = gp;
 		this.playerControl = playerControl;
 		
 		//return the halfway point of the screen
@@ -85,6 +84,10 @@ public class Player extends Entity{
 			// CHECK OBJECT COLLISION
 			int objIndex = gp.cChecker.checkObject(this,  true);
 			pickUpObject(objIndex);
+			
+			// CHECK NPC COLLISION
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == false) {
@@ -153,6 +156,12 @@ public class Player extends Entity{
 				gp.playSE(4);
 				break;
 			}
+		}
+	}
+	
+	public void interactNPC(int i) {
+		if (i != 999) {
+			System.out.println("YOu are hitting an npc!");
 		}
 	}
 	

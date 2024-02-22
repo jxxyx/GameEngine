@@ -7,6 +7,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
 import tile.TileManager;
 import object.SuperObject;
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// ENTITY OBJECT
 	public Player player = new Player(this, playerControl);
 	public SuperObject obj[] = new SuperObject[10];
+	public Entity npc[] = new Entity[10];
 	
 	public int gameState;
 	public final int titleState = 0;
@@ -67,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame() {
 		
 		aSetter.setObject();
+		aSetter.setNPC();
 		
 		playMusic(0);
 	}
@@ -113,7 +116,14 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void update() {
 		if(gameState == playState) {
+			// PLAYER
 			player.update();
+			// NPC
+			for (int i = 0; i < npc.length; i++) {
+				if (npc[i] != null) {
+					npc[i].update();
+				}
+			}
 		}
 		if(gameState == pauseState) {
 			//nothing
@@ -139,6 +149,13 @@ public class GamePanel extends JPanel implements Runnable{
 			for(int i = 0; i <obj.length; i++){
 				if(obj[i] !=null) {
 					obj[i].draw(g2, this);
+				}
+			}
+			
+			// NPC
+			for(int i = 0; i < npc.length; i++) {
+				if (npc[i] != null) {
+					npc[i].draw(g2);
 				}
 			}
 

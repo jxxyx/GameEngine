@@ -4,6 +4,7 @@ package com.mygdx.game;
 import object.Obj_Chest;
 import object.Obj_Door;
 import object.Obj_key;
+import entity.NPC_OldMan;
 import object.Obj_Boots;
 
 public class AssetSetter {
@@ -49,5 +50,10 @@ public class AssetSetter {
         gp.obj[7] = new Obj_Boots();
         gp.obj[7].worldX = 37 * gp.tileSize;
         gp.obj[7].worldY = 42 * gp.tileSize;
+    }
+    public void setNPC() {
+    	gp.npc[0] = new NPC_OldMan(gp);
+    	gp.npc[0].worldX = gp.tileSize*21;
+    	gp.npc[0].worldY = gp.tileSize*21;
     }
 }
