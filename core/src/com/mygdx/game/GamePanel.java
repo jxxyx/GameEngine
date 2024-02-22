@@ -7,12 +7,9 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import com.badlogic.gdx.audio.Sound;
-
 import entity.Player;
 import tile.TileManager;
 import object.SuperObject;
-
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -53,10 +50,13 @@ public class GamePanel extends JPanel implements Runnable{
 	// ENTITY OBJECT
 	public Player player = new Player(this, playerControl);
 	public SuperObject obj[] = new SuperObject[10];
-
 	
+	public int gameState;
+	public final int titleState = 0;
+	public final int playState = 1;
+	public final int pauseState = 2;
+
 	public GamePanel() {
-		
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.BLACK);
 		this.setDoubleBuffered(true);
@@ -112,33 +112,44 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void update() {
-		player.update();
+		if(gameState == playState) {
+			player.update();
+		}
+		if(gameState == pauseState) {
+			//nothing
+		}
+
 	}
 	
 	public void paintComponent(Graphics g) {
-		
 		super.paintComponent(g); 
-		
 		Graphics2D g2 = (Graphics2D)g;
-
-	
-
-		// This is like a layer
-		// Tile
-		tileM.draw(g2);
-
-		// Object
-		for(int i = 0; i <obj.length; i++){
-			if(obj[i] !=null) {
-				obj[i].draw(g2, this);
-			}
-		}
-
-		// Player
-		player.draw(g2);
 		
-		// UI
-		ui.draw(g2);
+		// TITLE SCREEN
+		if(gameState == titleState) {
+			ui.draw(g2);
+		}
+		// OTHERS
+		else {
+			// This is like a layer
+			// Tile
+			tileM.draw(g2);
+
+			// Object
+			for(int i = 0; i <obj.length; i++){
+				if(obj[i] !=null) {
+					obj[i].draw(g2, this);
+				}
+			}
+
+			// Player
+			player.draw(g2);
+			
+			// UI
+			ui.draw(g2);
+		}
+		
+
 		
 		g2.dispose();
 	}
@@ -147,9 +158,11 @@ public class GamePanel extends JPanel implements Runnable{
 		music.play();
 		music.loop();
 	}
+	
 	public void stopMusic() {
 		music.stop();
 	}
+	
 	public void playSE(int i) {
 		SE.setFile(i);
 		SE.play();

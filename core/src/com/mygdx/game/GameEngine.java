@@ -16,6 +16,7 @@ public class GameEngine extends ApplicationAdapter {;
         window.setTitle("PokeFight");
         
         GamePanel gamePanel = new GamePanel(); // Initialize GamePanel
+        
         // Add GamePanel to the window's content pane
         window.getContentPane().add(gamePanel);
 
