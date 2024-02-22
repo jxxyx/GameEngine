@@ -42,9 +42,9 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// SYSTEM
 	TileManager tileM = new TileManager(this);
-	Sound SE = new Sound();
-	Sound music = new Sound();
 	PlayerControl playerControl = new PlayerControl();
+	customSound music = new customSound();
+	customSound SE = new customSound();
 	public CollisionManager cChecker = new CollisionManager(this);
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
@@ -67,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame() {
 		
 		aSetter.setObject();
+		
 		playMusic(0);
 	}
 
