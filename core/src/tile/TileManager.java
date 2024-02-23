@@ -4,22 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import com.mygdx.game.GamePanel;
+import com.mygdx.game.SceneManager;
+
 import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager {
+public class TileManager extends SceneManager{
 	
-	GamePanel gp;
-	private Tile[] tile;
-	private int MapTileNum[][];
+	public Tile[] tile;
+	public int MapTileNum[][];
 	
 	
-	// Contructor
+	// Constructor
 	public TileManager(GamePanel gp) {
+		super(gp);
 		
-		this.gp = gp;
-
 		tile = new Tile[10];
 		MapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
@@ -27,19 +27,26 @@ public class TileManager {
 		loadMap("/maps/world01.txt");
 	}
 	
-	// Getter Methods
-	public GamePanel getGP() {
-		return gp;
-	}
+    // Getter and Setter for tile and MapTileNum
+    public Tile[] getTile() {
+        return tile;
+    }
 
-	public Tile[] getTile() {
-		return tile;
-	}
+    public void setTile(Tile[] tile) {
+        this.tile = tile;
+    }
 
-	public int[][] getMapTileNum() {
-		return MapTileNum;
-	}
+    public int[][] getMapTileNum() {
+        return MapTileNum;
+    }
 
+    public void setMapTileNum(int[][] mapTileNum) {
+        MapTileNum = mapTileNum;
+    }
+
+    // Rest of the TileManager class...
+
+	
 	// Creating a method to load the map
 	public void loadMap(String filePath) {
 		
@@ -113,6 +120,7 @@ public class TileManager {
 	}
 
 	// Create draw method to draw the tiles
+	@Override
 	public void draw(Graphics2D g2){
 		
 		int worldCol = 0;
