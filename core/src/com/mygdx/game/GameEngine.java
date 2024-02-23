@@ -13,7 +13,7 @@ public class GameEngine extends ApplicationAdapter {;
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("PokeFight");
+        window.setTitle("Dino Adventures");
         
         GamePanel gamePanel = new GamePanel(); // Initialize GamePanel
         
