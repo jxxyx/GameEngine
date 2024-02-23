@@ -11,8 +11,8 @@ import java.io.InputStreamReader;
 public class TileManager {
 	
 	GamePanel gp;
-	public Tile[] tile;
-	public int MapTileNum[][];
+	private Tile[] tile;
+	private int MapTileNum[][];
 	
 	
 	// Contructor
@@ -27,6 +27,19 @@ public class TileManager {
 		loadMap("/maps/world01.txt");
 	}
 	
+	// Getter Methods
+	public GamePanel getGP() {
+		return gp;
+	}
+
+	public Tile[] getTile() {
+		return tile;
+	}
+
+	public int[][] getMapTileNum() {
+		return MapTileNum;
+	}
+
 	// Creating a method to load the map
 	public void loadMap(String filePath) {
 		

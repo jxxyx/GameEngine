@@ -67,6 +67,10 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true);
 	}
 
+	public TileManager getTileManager() {
+		return tileM;
+	}
+
 	public void setupGame() {
 		
 		aSetter.setObject();

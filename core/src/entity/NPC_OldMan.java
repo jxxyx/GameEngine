@@ -2,12 +2,13 @@ package entity;
 
 import java.io.IOException;
 import java.util.Random;
+import com.mygdx.game.AI_controller;
 
 import javax.imageio.ImageIO;
 
 import com.mygdx.game.GamePanel;
 
-public class NPC_OldMan extends Entity{
+public class NPC_OldMan extends Entity implements AI_controller{
 
 	
 	public NPC_OldMan(GamePanel gp) {
@@ -35,7 +36,9 @@ public class NPC_OldMan extends Entity{
 			e.printStackTrace();
 		}
 	}
-	public void setAction() {
+
+	@Override
+	public void performAIAction() {
 		actionLockCounter ++;
 		if (actionLockCounter == 120) {
 			Random random = new Random();
@@ -56,4 +59,5 @@ public class NPC_OldMan extends Entity{
 			actionLockCounter = 0;
 		}
 	}
+		
 }
