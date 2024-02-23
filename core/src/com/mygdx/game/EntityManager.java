@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
+import java.awt.Graphics2D;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
+import entity.Entity;
 
 public class EntityManager { 
 
@@ -11,12 +12,16 @@ public class EntityManager {
         this.entityList = entityList;
     }
 
-    public void draw() {
-        // ... (existing code)
+    public void draw(Graphics2D g2) {
+        for (Entity entity : entityList) {
+            entity.draw(g2);
+        }
     }
 
     public void updateAll() {
-        // ... (existing code)
+        for (Entity entity : entityList) {
+            entity.update();
+        }
     }
 
     public void moveAll() {
