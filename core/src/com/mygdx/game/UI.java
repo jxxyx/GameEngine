@@ -83,7 +83,9 @@ public class UI {
 			g2.drawString("x " + gp.player.hasKey, 74, 65);
 			
 			// TIME
-			playTime += (double)1/60;
+			if(gp.gameState != gp.pauseState) {
+				playTime += (double)1/60;
+			}
 			g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
 			
 			// MESSAGE

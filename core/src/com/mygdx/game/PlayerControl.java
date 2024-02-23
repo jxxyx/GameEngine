@@ -45,6 +45,11 @@ public class PlayerControl implements KeyListener{
 					System.exit(0);
 				}
 			}
+
+			if (code == KeyEvent.VK_ESCAPE) {
+				// Set the game state to the menu state
+				gp.gameState = gp.titleState;
+			}
 		}
 		
 		// PLAY STATE
@@ -76,8 +81,14 @@ public class PlayerControl implements KeyListener{
 					gp.gameState = gp.playState;
 				}
 			}
-		}
+		} 
 		
+		// Check if ESC key is pressed
+		if (code == KeyEvent.VK_ESCAPE) {
+			// Set the game state to the menu state
+			gp.gameState = gp.titleState;
+			return; // Skip the rest of the method
+		}
 		
 	}
 
