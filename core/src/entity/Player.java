@@ -4,8 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import com.mygdx.game.GamePanel;
 import com.mygdx.game.PlayerControl;
@@ -17,12 +20,14 @@ public class Player extends Entity{
 	public final int screenX;
 	public final int screenY;
 	public int hasKey = 0;
+	private Scanner scanner;
+
 	
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		super(gp);
 		
 		this.playerControl = playerControl;
-		
+		this.scanner = new Scanner(System.in);
 		//return the halfway point of the screen
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
@@ -127,12 +132,15 @@ public class Player extends Entity{
 			String objectName = gp.obj[i].name;
 			
 			switch (objectName) {
-			case "Key":
-				gp.playSE(1);
-				hasKey++;
-				gp.obj[i] = null;
-				gp.ui.showMessage("You got a key!");
-				break;
+				case "Key":
+					gp.playSE(1);
+					hasKey++;
+					gp.obj[i] = null;
+					gp.ui.showMessage("You got a key!");
+					promptMathQuestion(); // Call method to prompt math question
+					break;
+				// Other cases remain unchanged
+
 			case "Door":
 				if (hasKey > 0) {
 					gp.playSE(3);
@@ -158,6 +166,32 @@ public class Player extends Entity{
 			}
 		}
 	}
+	
+	public void promptMathQuestion() {
+		// Display the math question in a dialog box
+		int num1 = 5;
+		int num2 = 12;
+		int correctAnswer = num1 + num2;
+	
+		String question = "What is " + num1 + " + " + num2 + "?";
+		JFrame frame = new JFrame();
+		String userInput = JOptionPane.showInputDialog(frame, question);
+		
+		// Check if the player's input matches the correct answer
+		try {
+			int userAnswer = Integer.parseInt(userInput);
+			if (userAnswer == correctAnswer) {
+				gp.ui.showMessage("Correct!");
+				// Additional actions if the answer is correct
+			} else {
+				gp.ui.showMessage("Incorrect. Try again!");
+				// Additional actions if the answer is incorrect
+			}
+		} catch (NumberFormatException e) {
+			gp.ui.showMessage("Invalid input. Please enter a number.");
+		}
+	}
+
 	
 	public void interactNPC(int i) {
 		if (i != 999) {
