@@ -131,15 +131,17 @@ public class Player extends Entity{
 		if (i != 999) {
 			String objectName = gp.obj[i].name;
 			
-			switch (objectName) {
-				case "Key":
-					gp.playSE(1);
-					hasKey++;
-					gp.obj[i] = null;
-					gp.ui.showMessage("You got a key!");
-					promptMathQuestion(); // Call method to prompt math question
-					break;
-				// Other cases remain unchanged
+		int worldX = gp.obj[i].worldX / gp.tileSize;
+        int worldY = gp.obj[i].worldY / gp.tileSize;
+
+        switch (objectName) {
+            case "Key":
+                gp.playSE(1);
+                hasKey++;
+                gp.obj[i] = null;
+                gp.ui.showMessage("You got a key!");
+                promptMathQuestionForKey(worldX, worldY); // Call method to prompt math question based on key location
+                break;
 
 			case "Door":
 				if (hasKey > 0) {
@@ -167,16 +169,48 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void promptMathQuestion() {
-		// Display the math question in a dialog box
-		int num1 = 5;
-		int num2 = 12;
+	public void promptMathQuestionForKey(int worldX, int worldY) {
+		// Display the math question in a dialog box based on key location
+		int num1, num2;
+		String question;
+		switch (worldX) {
+			case 23:
+				if (worldY == 7) {
+					// Key at position (23, 7)
+					num1 = 5;
+					num2 = 12;
+					question = "What is " + num1 + " + " + num2 + "?";
+					break;
+				} else if (worldY == 40) {
+					// Key at position (23, 40)
+					num1 = 10;
+					num2 = 8;
+					question = "What is " + num1 + " + " + num2 + "?";
+					break;
+				}
+				// Other cases for position (23, Y)
+			case 38:
+				if (worldY == 8) {
+					// Key at position (38, 8)
+					num1 = 20;
+					num2 = 5;
+					question = "What is " + num1 + " + " + num2 + "?";
+					break;
+				}
+				// Other cases for position (38, Y)
+			default:
+				// Default question
+				num1 = 0;
+				num2 = 0;
+				question = "Default math question.";
+				break;
+		}
+	
 		int correctAnswer = num1 + num2;
 	
-		String question = "What is " + num1 + " + " + num2 + "?";
 		JFrame frame = new JFrame();
 		String userInput = JOptionPane.showInputDialog(frame, question);
-		
+	
 		// Check if the player's input matches the correct answer
 		try {
 			int userAnswer = Integer.parseInt(userInput);
