@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import object.Obj_key;
 
@@ -73,6 +76,9 @@ public class UI {
 			y = gp.screenHeight/2 + (gp.tileSize*2);
 			g2.drawString(text, x, y);
 			
+		    // Writing playtime to a text file
+		    writePlaytimeToFile(playTime);
+			
 			gp.gameThread = null;
 			
 		}
@@ -120,5 +126,14 @@ public class UI {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();	
 		int x = gp.screenWidth/2 - length/2;
 		return x;
+	}
+	
+	private void writePlaytimeToFile(double playTime) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt"))) {
+	        // Append the playtime to the file
+	        writer.write("Playtime: " + playTime + " seconds");
+	    } catch (IOException e) {
+	        e.printStackTrace(); // Handle the exception appropriately in your actual application
+	    }
 	}
 }

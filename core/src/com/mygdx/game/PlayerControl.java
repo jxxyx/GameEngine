@@ -27,12 +27,12 @@ public class PlayerControl implements KeyListener{
 			if(code == KeyEvent.VK_W) {
 				gp.mp.commandNum--;
 				if(gp.mp.commandNum < 0) {
-					gp.mp.commandNum = 1;
+					gp.mp.commandNum = 2;
 				}
 			}
 			if(code == KeyEvent.VK_S) {
 				gp.mp.commandNum++;
-				if(gp.mp.commandNum > 1) {
+				if(gp.mp.commandNum > 2) {
 					gp.mp.commandNum = 0;
 				}
 			}
@@ -41,7 +41,13 @@ public class PlayerControl implements KeyListener{
 					gp.gameState = gp.playState;
 					gp.playMusic(0);
 				}
+				
 				if(gp.mp.commandNum == 1) {
+					gp.gameState = gp.leaderboardState;
+					gp.playMusic(0);
+				}
+				
+				if(gp.mp.commandNum == 2) {
 					System.exit(0);
 				}
 			}

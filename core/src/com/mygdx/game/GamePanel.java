@@ -47,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public AssetSetter aSetter = new AssetSetter(this);
 	public UI ui = new UI(this);
 	public MenuPanel mp = new MenuPanel(this);
+	public LeaderboardPanel lp = new LeaderboardPanel(this);
 	Thread gameThread;
 
 	// ENTITY OBJECT
@@ -57,7 +58,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public int gameState;
 	public final int titleState = 0;
 	public final int playState = 1;
-	public final int pauseState = 2;
+	public final int leaderboardState = 2;
+	public final int pauseState = 3;
 
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -144,6 +146,9 @@ public class GamePanel extends JPanel implements Runnable{
 		// TITLE SCREEN
 		if(gameState == titleState) {
 			mp.draw(g2);
+		}
+		else if(gameState == leaderboardState) {
+			lp.draw(g2);
 		}
 		// OTHERS
 		else {
