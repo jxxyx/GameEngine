@@ -3,9 +3,13 @@ package com.mygdx.game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class LeaderboardPanel extends SceneManager {
 	
@@ -14,8 +18,9 @@ public class LeaderboardPanel extends SceneManager {
 	public UI ui = new UI(gp);
     Font arial_40, arial_80B;
     public int commandNum = 0;
+    String playTime; 
 
-    private ArrayList<PlayerRecord> playerRecords;
+    private List<String> playerRecords;
     
     public LeaderboardPanel(GamePanel gp) {
     	super(gp);
@@ -25,19 +30,6 @@ public class LeaderboardPanel extends SceneManager {
 		arial_80B = new Font("Arial", Font.BOLD, 80);
     }
 
-    public void addPlayerRecord(PlayerRecord record) {
-        playerRecords.add(record);
-        sortLeaderboard();
-    }
-
-    public ArrayList<PlayerRecord> getPlayerRecords() {
-        return playerRecords;
-    }
-
-    private void sortLeaderboard() {
-        // Sort the leaderboard based on play time or any other relevant metric
-        Collections.sort(playerRecords, Comparator.comparingDouble(PlayerRecord::getPlayTime));
-    }
 
 	@Override
 	public void draw(Graphics2D g2) {
@@ -47,51 +39,72 @@ public class LeaderboardPanel extends SceneManager {
 		g2.setColor(Color.white);
 		
 		// TITLE STATE
-		if(gp.gameState == gp.titleState) {
+		if(gp.gameState == gp.leaderboardState) {
+			
 			drawLeaderboard();
 		}
 		
 	}
 	
 	private void drawLeaderboard() {
-		g2.setColor(new Color(0, 0, 0));
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-		
-		// TITLE NAME
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
-		String text = "Dino Adventure";
-		int x = getXforCenteredText(text);
-		int y = gp.tileSize*3;
-		
-		// SHADOW
-		g2.setColor(Color.gray);
-		g2.drawString(text, x+5, y+5);
-		
-		// MAIN COLOR
-		g2.setColor(Color.white);
-		g2.drawString(text, x, y);
-		
-		// DINO IMAGE
-		x = gp.screenWidth/2 - (gp.tileSize*2)/2;
-		y += gp.tileSize*2;
-		g2.drawImage(gp.player.down1, x, y, gp.tileSize*2, gp.tileSize*2, null);
-		
-		// MENU
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
-		
-		text = String.valueOf(ui.playTime);
-		x = getXforCenteredText(text);
-		y += gp.tileSize *3.5;
-		g2.drawString(text, x, y);
-		if(commandNum == 0) {
-			g2.drawString(">", x-gp.tileSize, y);
-		}
-		
+	    g2.setColor(new Color(0, 0, 0));
+	    g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+	    // TITLE NAME
+	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+	    String title = "Leaderboard";
+	    int x = getXforCenteredText(title);
+	    int y = gp.tileSize * 2;
+
+	    // SHADOW
+	    g2.setColor(Color.gray);
+	    g2.drawString(title, x + 5, y + 5);
+
+	    // MAIN COLOR
+	    g2.setColor(Color.white);
+	    g2.drawString(title, x, y);
+
+	    // MENU
+	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+
+	    playerRecords = readPlaytimefromFile();
+
+	    // Extract numeric part and sort
+	    playerRecords.sort(Comparator.comparingDouble(this::extractPlaytime));
+
+	    // Display only the top 5 records or less if the list is smaller
+	    for (int i = 0; i < Math.min(playerRecords.size(), 5); i++) {
+	        String time = playerRecords.get(i);
+	        x = getXforCenteredText(time);
+	        y += gp.tileSize;
+	        g2.drawString(time, x, y);
+	    }
 	}
 	
 	public int getXforCenteredText(String text) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();	
-		int x = gp.screenWidth - length/2;
+		int x = gp.screenWidth/2 - length/2;
 		return x;
 	}
+	
+	private List<String> readPlaytimefromFile() {
+		List<String> times = new ArrayList<>(); 
+	    try (BufferedReader reader = new BufferedReader(new FileReader("playtime.txt"))) {
+	    	String line; 
+	        while ((line = reader.readLine()) != null) { 
+	            times.add(line); 
+	        } 
+	    } catch (IOException e) {
+	        e.printStackTrace(); // Handle the exception appropriately in your actual application
+	    }
+	    return times;
+	}
+	
+	private double extractPlaytime(String record) {
+	    // Extract numeric part from the record
+	    String numericPart = record.replaceAll("[^0-9.]", "");
+	    return Double.parseDouble(numericPart);
+	}
+	
+	
 }

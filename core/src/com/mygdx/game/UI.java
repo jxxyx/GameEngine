@@ -129,9 +129,9 @@ public class UI {
 	}
 	
 	private void writePlaytimeToFile(double playTime) {
-	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt"))) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt", true))) {
 	        // Append the playtime to the file
-	        writer.write("Playtime: " + playTime + " seconds");
+	        writer.write("Playtime: " + dFormat.format(playTime) + " seconds\n");
 	    } catch (IOException e) {
 	        e.printStackTrace(); // Handle the exception appropriately in your actual application
 	    }

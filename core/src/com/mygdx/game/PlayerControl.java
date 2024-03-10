@@ -44,7 +44,6 @@ public class PlayerControl implements KeyListener{
 				
 				if(gp.mp.commandNum == 1) {
 					gp.gameState = gp.leaderboardState;
-					gp.playMusic(0);
 				}
 				
 				if(gp.mp.commandNum == 2) {
