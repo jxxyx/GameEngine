@@ -9,6 +9,7 @@ public class Obj_key extends SuperObject{
     public Obj_key(){
 
         name = "Key";
+        description = "[" + name + "]\nAn key to unlock doors.";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
 

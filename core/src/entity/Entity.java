@@ -21,6 +21,8 @@ public class Entity {
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	public int actionLockCounter = 0;
+	public String description = "";
+
 	
 	public Entity(GamePanel gp) {
 		this.gp = gp;

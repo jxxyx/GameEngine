@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,10 @@ import javax.swing.JOptionPane;
 
 import com.mygdx.game.GamePanel;
 import com.mygdx.game.PlayerControl;
+import object.Obj_key;
+import object.SuperObject;
+
+import object.SuperObject;
 
 public class Player extends Entity{
 	
@@ -21,6 +26,8 @@ public class Player extends Entity{
 	public final int screenY;
 	public int hasKey = 0;
 	private Scanner scanner;
+	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
+	public final int maxInventorySize = 20;
 
 	
 	public Player(GamePanel gp, PlayerControl playerControl) {
@@ -39,6 +46,7 @@ public class Player extends Entity{
 		
 		setDefaultValues();
 		getPlayerImage();
+		setItems();
 	}
 	
 	public void setDefaultValues() {
@@ -47,6 +55,11 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 21;
 		speed= 4;
 		direction = "down";
+	}
+
+	//to manually set items in the inventory
+	public void setItems() {
+		//inventory.add((Object) new Obj_key());
 	}
 	
 	public void getPlayerImage() {
@@ -129,44 +142,61 @@ public class Player extends Entity{
 	
 	public void pickUpObject (int i) {
 		if (i != 999) {
-			String objectName = gp.obj[i].name;
-			
+		String objectName = gp.obj[i].name;
+		String text;
+	
 		int worldX = gp.obj[i].worldX / gp.tileSize;
         int worldY = gp.obj[i].worldY / gp.tileSize;
 
-        switch (objectName) {
-            case "Key":
-                gp.playSE(1);
-                hasKey++;
-                gp.obj[i] = null;
-                gp.ui.showMessage("You got a key!");
-                promptMathQuestionForKey(worldX, worldY); // Call method to prompt math question based on key location
-                break;
-
-			case "Door":
-				if (hasKey > 0) {
-					gp.playSE(3);
-					gp.obj[i] = null;
-					hasKey--;
-					gp.ui.showMessage("You opened the door!");
+	// CHECK OBJECT NAME
+	switch (objectName) {
+		case "Key":
+		case "Boots":
+			// CHECK IF INVENTORY IS FULL
+			if (inventory.size() != maxInventorySize) {
+				inventory.add(gp.obj[i]);
+				text = "Got a " + objectName + "!";
+				if ("Key".equals(objectName)) {
+					gp.playSE(1);
+					hasKey++;
+					gp.ui.showMessage("You got a key!");
+					promptMathQuestionForKey(worldX, worldY); // Call method to prompt math question based on key location
+				} else {
+					gp.playSE(2);
+					speed += 2;
+					gp.ui.showMessage("Speed up!");
 				}
-				else {
-					gp.ui.showMessage("You need a key!");
-				}
-				break;
-			case "Boots":
-				gp.playSE(2);
-				speed += 2;
 				gp.obj[i] = null;
-				gp.ui.showMessage("Speed up!");
-				break;
-			case "Chest":
-				gp.ui.gameFinished = true;
-				gp.stopMusic();
-				gp.playSE(4);
-				break;
+			} else {
+				text = "You cannot carry anymore. Inventory is full!";
 			}
-		}
+			break;
+		case "Door":
+			if (hasKey > 0) {
+				gp.playSE(3);
+				gp.obj[i] = null;
+				hasKey--;
+				  // Remove a key from the inventory
+				  for (int j = 0; j < inventory.size(); j++) {
+					if ("Key".equals(inventory.get(j).name)) {
+						inventory.remove(j);
+						break;
+					}
+				}
+				gp.ui.showMessage("You opened the door!");
+			}
+			else {
+				gp.ui.showMessage("You need a key!");
+			}
+			break;
+		case "Chest":
+			gp.ui.gameFinished = true;
+			gp.stopMusic();
+			gp.playSE(4);
+			break;
+			
+	}
+}
 	}
 	
 	public void promptMathQuestionForKey(int worldX, int worldY) {
