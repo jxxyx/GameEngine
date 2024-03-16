@@ -35,6 +35,11 @@ public class PlayerControl implements KeyListener{
 		else if(gp.gameState == gp.pauseState) {
 			pauseState(code);
 		} 
+		else if (gp.gameState == gp.dialogueState){
+			if(code == KeyEvent.VK_ENTER){
+				gp.gameState = gp.playState;
+			}
+		}
 
 		//character state
 		else if(gp.gameState == gp.characterState) {
@@ -63,9 +68,15 @@ public class PlayerControl implements KeyListener{
 				gp.playMusic(0);
 			}
 			if(gp.mp.commandNum == 1) {
+				gp.gameState = gp.leaderboardState;
+			  }
+		
+			  if(gp.mp.commandNum == 2) {
 				System.exit(0);
-			}
+			  }
+			
 		}
+
 	}
 
 	public void playState(int code) {
@@ -94,12 +105,15 @@ public class PlayerControl implements KeyListener{
 		}
 	}
 
+
+
 	public void pauseState(int code) {
 		if(code == KeyEvent.VK_P) {
 			if(gp.gameState == gp.pauseState) {
 				gp.gameState = gp.playState;
 			}
 		}
+	
 	}
 
 	public void characterState(int code) {

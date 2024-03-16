@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import object.Obj_key;
 
@@ -22,6 +22,7 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public boolean gameFinished = false;
+	public String currentDialogue = "";
 //	public int commandNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
@@ -119,6 +120,11 @@ public class UI {
 			//drawCharacterScreen();
 			drawInventory();
 		}
+
+		// DIALOGUE STATE
+		if(gp.gameState == gp.dialogueState){
+			drawDialogueScreen();
+		}
 		
 	}
 	
@@ -129,6 +135,26 @@ public class UI {
 		int y = gp.screenHeight/2;
 		
 		g2.drawString(text, x, y);
+	}
+
+	public void drawDialogueScreen(){
+		//window
+		int x = gp.tileSize*2;
+		int y = gp.tileSize/2;
+		int width = gp.screenWidth - (gp.tileSize*4);
+		int height = gp.tileSize*5;
+
+		drawSubWindow(x, y, width, height);
+
+		x += gp.tileSize;
+		y += gp.tileSize;
+
+		
+		for(String line: currentDialogue.split("\n")){
+			g2.drawString(line, x, y);
+			y += 40;
+		}
+
 	}
 
 	public void drawCharacterScreen() {

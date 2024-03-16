@@ -15,6 +15,7 @@ public class Entity {
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public String direction;	
 	
+	
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
@@ -22,6 +23,8 @@ public class Entity {
 	public boolean collisionOn = false;
 	public int actionLockCounter = 0;
 	public String description = "";
+	String dialogues[] = new String[20];
+	int dialogueIndex = 0;
 
 	
 	public Entity(GamePanel gp) {
@@ -70,6 +73,8 @@ public class Entity {
 		}
 		
 	}
+
+	public void speak() {};
 	public void draw(Graphics2D g2) {
 		
 		BufferedImage image = null;

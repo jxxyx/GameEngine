@@ -1,16 +1,16 @@
 package com.mygdx.game;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Color;
 
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import tile.TileManager;
 import object.SuperObject;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -60,7 +60,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int playState = 1;
 	public final int leaderboardState = 2;
 	public final int pauseState = 3;
-	public final int characterState= 3;
+	public final int characterState= 4;
+	public final int dialogueState = 5;
 
 
 	public GamePanel() {

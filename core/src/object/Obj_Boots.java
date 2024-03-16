@@ -1,7 +1,7 @@
 package object;
 
 import java.io.IOException;
-import java.io.InvalidObjectException; 
+
 import javax.imageio.ImageIO;
 
 public class Obj_Boots extends SuperObject {
