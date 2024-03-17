@@ -9,6 +9,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.awt.Image;
+
+// import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import object.Obj_key;
 
@@ -93,8 +96,11 @@ public class UI {
 			g2.drawString("x " + gp.player.hasKey, 74, 65);
 			
 			// TIME
-			playTime += (double)1/60;
-			g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
+			if (gp.gameState != gp.pauseState && gp.gameState != gp.characterState) {
+				playTime += (double)1/60;
+				g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
+			}
+
 			
 			// MESSAGE
 			if(messageOn == true) {
@@ -189,10 +195,13 @@ public class UI {
 		int slotX = slotXstart;
 		int slotY = slotYstart;
 		int slotSize = gp.tileSize+3;
+		int imageWidth = slotSize; // specify the width of the image
+		int imageHeight = slotSize; // specify the height of the image
 
-		//DRAW PLAYERS ITEMS
+		//DRAW PLAYERS ITEMS IN INVENTORY
 		for(int i = 0; i < gp.player.inventory.size(); i++) {
-			g2.drawImage(gp.player.inventory.get(i).image, slotX, slotY, null);
+			Image scaledImage = gp.player.inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+			g2.drawImage(scaledImage, slotX, slotY, null);
 
 			slotX += slotSize;
 			if( i == 4 || i == 9 || i == 14) {
