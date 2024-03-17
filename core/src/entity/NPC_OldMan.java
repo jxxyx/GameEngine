@@ -2,10 +2,10 @@ package entity;
 
 import java.io.IOException;
 import java.util.Random;
-import com.mygdx.game.AI_controller;
 
 import javax.imageio.ImageIO;
 
+import com.mygdx.game.AI_controller;
 import com.mygdx.game.GamePanel;
 
 public class NPC_OldMan extends Entity implements AI_controller{
@@ -18,6 +18,7 @@ public class NPC_OldMan extends Entity implements AI_controller{
 		speed = 1;
 		
 		getImage();
+		setDialogue();
 		
 	}
 	public void getImage() {
@@ -35,6 +36,12 @@ public class NPC_OldMan extends Entity implements AI_controller{
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public void setDialogue(){
+		dialogues[0] = "Hello adventurer";
+		dialogues[1] = "There are multiple math \nquestions";
+		dialogues[2] = "Solve them to obtain keys \nwhich can unlock doors!";
+		dialogues[3] = "Goodluck!";
 	}
 
 	@Override
@@ -59,5 +66,9 @@ public class NPC_OldMan extends Entity implements AI_controller{
 			actionLockCounter = 0;
 		}
 	}
-		
+	public void speak() {
+		gp.ui.currentDialogue = dialogues[dialogueIndex];
+		dialogueIndex++;
+
+	}
 }

@@ -1,13 +1,17 @@
 package com.mygdx.game;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.awt.Image;
+
+// import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import object.Obj_key;
 
@@ -21,7 +25,10 @@ public class UI {
 	public String message = "";
 	int messageCounter = 0;
 	public boolean gameFinished = false;
+	public String currentDialogue = "";
 //	public int commandNum = 0;
+	public int slotCol = 0;
+	public int slotRow = 0;
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -89,8 +96,11 @@ public class UI {
 			g2.drawString("x " + gp.player.hasKey, 74, 65);
 			
 			// TIME
-			playTime += (double)1/60;
-			g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
+			if (gp.gameState != gp.pauseState && gp.gameState != gp.characterState) {
+				playTime += (double)1/60;
+				g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
+			}
+
 			
 			// MESSAGE
 			if(messageOn == true) {
@@ -110,6 +120,17 @@ public class UI {
 		if(gp.gameState == gp.pauseState) {
 			drawPauseScreen();
 		}
+
+		//character state
+		if(gp.gameState == gp.characterState) {
+			//drawCharacterScreen();
+			drawInventory();
+		}
+
+		// DIALOGUE STATE
+		if(gp.gameState == gp.dialogueState){
+			drawDialogueScreen();
+		}
 		
 	}
 	
@@ -121,6 +142,123 @@ public class UI {
 		
 		g2.drawString(text, x, y);
 	}
+
+	public void drawDialogueScreen(){
+		//window
+		int x = gp.tileSize*2;
+		int y = gp.tileSize/2;
+		int width = gp.screenWidth - (gp.tileSize*4);
+		int height = gp.tileSize*5;
+
+		drawSubWindow(x, y, width, height);
+
+		x += gp.tileSize;
+		y += gp.tileSize;
+
+		
+		for(String line: currentDialogue.split("\n")){
+			g2.drawString(line, x, y);
+			y += 40;
+		}
+
+	}
+
+	public void drawCharacterScreen() {
+		final int frameX = gp.tileSize*2;
+		final int frameY = gp.tileSize*2;
+		final int framWidth = gp.tileSize*5;
+		final int frameHeight = gp.tileSize*10;
+		drawSubWindow(frameX, frameY, framWidth, frameHeight);
+	}
+
+	public void drawSubWindow(int x, int y, int width, int height) {
+		Color c = new Color(0,0,0,210);
+		g2.setColor(c);
+		g2.fillRoundRect(x, y, width, height, 35, 35);
+
+		c = new Color(255,255,255,255);
+		g2.setColor(c);
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+	}
+
+	public void drawInventory() {
+		final int frameX = gp.tileSize*9;
+		final int frameY = gp.tileSize;
+		final int framWidth = gp.tileSize*6;
+		final int frameHeight = gp.tileSize*5;
+		drawSubWindow(frameX, frameY, framWidth, frameHeight);
+
+		//slot
+		final int slotXstart = frameX + 20;
+		final int slotYstart = frameY + 20;
+		int slotX = slotXstart;
+		int slotY = slotYstart;
+		int slotSize = gp.tileSize+3;
+		int imageWidth = slotSize; // specify the width of the image
+		int imageHeight = slotSize; // specify the height of the image
+
+		//DRAW PLAYERS ITEMS IN INVENTORY
+		for(int i = 0; i < gp.player.inventory.size(); i++) {
+			Image scaledImage = gp.player.inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+			g2.drawImage(scaledImage, slotX, slotY, null);
+
+			slotX += slotSize;
+			if( i == 4 || i == 9 || i == 14) {
+				slotX = slotXstart;
+				slotY += slotSize;
+			}
+		}
+
+		//cursor
+		int cursorX = slotXstart + (slotSize * slotCol);
+		int cursorY = slotYstart + (slotSize * slotRow);
+		int cursorWidth = gp.tileSize;
+		int cursorHeight = gp.tileSize;
+
+		//draw cursor
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(3));
+		g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
+		// description frame
+		int dFrameX = frameX;
+		int dFrameY = frameY + frameHeight;
+		int dFrameWidth = framWidth;
+		int dFrameHeight = gp.tileSize*3;
+		drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
+		//draw description text
+		int textX = dFrameX + 20;
+		int textY = dFrameY + gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(20F));
+
+		int itemIndex = getItemIndexOnSlot();
+		int maxWidth = 200; // Maximum width of a line
+		
+		if(itemIndex < gp.player.inventory.size()) {
+			String description = gp.player.inventory.get(itemIndex).description;
+			String[] words = description.split(" ");
+			String currentLine = words[0];
+		
+			for (int i = 1; i < words.length; i++) {
+				if (g2.getFontMetrics().stringWidth(currentLine + words[i]) < maxWidth) {
+					currentLine += " " + words[i];
+				} else {
+					g2.drawString(currentLine, textX, textY);
+					textY += g2.getFontMetrics().getHeight();
+					currentLine = words[i];
+				}
+			}
+			g2.drawString(currentLine, textX, textY);
+		}
+
+	}
+	
+	public int getItemIndexOnSlot(){
+		int itemIndex = slotCol + (slotRow * 5);
+		return itemIndex;
+	}
 	
 	public int getXforCenteredText(String text) {
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();	
@@ -129,9 +267,9 @@ public class UI {
 	}
 	
 	private void writePlaytimeToFile(double playTime) {
-	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt"))) {
+	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt", true))) {
 	        // Append the playtime to the file
-	        writer.write("Playtime: " + playTime + " seconds");
+	        writer.write("Playtime: " + dFormat.format(playTime) + " seconds\n");
 	    } catch (IOException e) {
 	        e.printStackTrace(); // Handle the exception appropriately in your actual application
 	    }

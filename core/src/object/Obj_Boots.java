@@ -1,7 +1,7 @@
 package object;
 
 import java.io.IOException;
-import java.io.InvalidObjectException; 
+
 import javax.imageio.ImageIO;
 
 public class Obj_Boots extends SuperObject {
@@ -9,6 +9,7 @@ public class Obj_Boots extends SuperObject {
     public Obj_Boots() {
 
         name = "Boots";
+        description = "[" + name + "]\nA boots that will increase your speed.";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
 

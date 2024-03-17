@@ -4,14 +4,15 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import com.mygdx.game.GamePanel;
 import com.mygdx.game.PlayerControl;
+
+import object.SuperObject;
 
 public class Player extends Entity{
 	
@@ -21,6 +22,8 @@ public class Player extends Entity{
 	public final int screenY;
 	public int hasKey = 0;
 	private Scanner scanner;
+	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
+	public final int maxInventorySize = 20;
 
 	
 	public Player(GamePanel gp, PlayerControl playerControl) {
@@ -39,6 +42,7 @@ public class Player extends Entity{
 		
 		setDefaultValues();
 		getPlayerImage();
+		setItems();
 	}
 	
 	public void setDefaultValues() {
@@ -47,6 +51,11 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 21;
 		speed= 4;
 		direction = "down";
+	}
+
+	//to manually set items in the inventory
+	public void setItems() {
+		//inventory.add((Object) new Obj_key());
 	}
 	
 	public void getPlayerImage() {
@@ -129,107 +138,83 @@ public class Player extends Entity{
 	
 	public void pickUpObject (int i) {
 		if (i != 999) {
-			String objectName = gp.obj[i].name;
-			
+		String objectName = gp.obj[i].name;
+		String text;
+	
 		int worldX = gp.obj[i].worldX / gp.tileSize;
         int worldY = gp.obj[i].worldY / gp.tileSize;
 
-        switch (objectName) {
-            case "Key":
-                gp.playSE(1);
-                hasKey++;
-                gp.obj[i] = null;
-                gp.ui.showMessage("You got a key!");
-                promptMathQuestionForKey(worldX, worldY); // Call method to prompt math question based on key location
-                break;
-
-			case "Door":
-				if (hasKey > 0) {
-					gp.playSE(3);
-					gp.obj[i] = null;
-					hasKey--;
-					gp.ui.showMessage("You opened the door!");
+	// CHECK OBJECT NAME
+	switch (objectName) {
+		case "Key":
+		case "Boots":
+			// CHECK IF INVENTORY IS FULL
+			if (inventory.size() != maxInventorySize) {
+				inventory.add(gp.obj[i]);
+				text = "Got a " + objectName + "!";
+				if ("Key".equals(objectName)) {
+					gp.playSE(1);
+					hasKey++;
+					gp.ui.showMessage("You got a key!");
+					gp.gameState=gp.dialogueState;
+					setDialogue1();
+					gp.ui.currentDialogue = dialogues[dialogueIndex];
+					dialogueIndex++;
+				
+					
+					
+					 // Call method to prompt math question based on key location
+				} else {
+					gp.playSE(2);
+					speed += 2;
+					gp.ui.showMessage("Speed up!");
 				}
-				else {
-					gp.ui.showMessage("You need a key!");
-				}
-				break;
-			case "Boots":
-				gp.playSE(2);
-				speed += 2;
 				gp.obj[i] = null;
-				gp.ui.showMessage("Speed up!");
-				break;
-			case "Chest":
-				gp.ui.gameFinished = true;
-				gp.stopMusic();
-				gp.playSE(4);
-				break;
-			}
-		}
-	}
-	
-	public void promptMathQuestionForKey(int worldX, int worldY) {
-		// Display the math question in a dialog box based on key location
-		int num1, num2;
-		String question;
-		switch (worldX) {
-			case 23:
-				if (worldY == 7) {
-					// Key at position (23, 7)
-					num1 = 5;
-					num2 = 12;
-					question = "What is " + num1 + " + " + num2 + "?";
-					break;
-				} else if (worldY == 40) {
-					// Key at position (23, 40)
-					num1 = 10;
-					num2 = 8;
-					question = "What is " + num1 + " + " + num2 + "?";
-					break;
-				}
-				// Other cases for position (23, Y)
-			case 38:
-				if (worldY == 8) {
-					// Key at position (38, 8)
-					num1 = 20;
-					num2 = 5;
-					question = "What is " + num1 + " + " + num2 + "?";
-					break;
-				}
-				// Other cases for position (38, Y)
-			default:
-				// Default question
-				num1 = 0;
-				num2 = 0;
-				question = "Default math question.";
-				break;
-		}
-	
-		int correctAnswer = num1 + num2;
-	
-		JFrame frame = new JFrame();
-		String userInput = JOptionPane.showInputDialog(frame, question);
-	
-		// Check if the player's input matches the correct answer
-		try {
-			int userAnswer = Integer.parseInt(userInput);
-			if (userAnswer == correctAnswer) {
-				gp.ui.showMessage("Correct!");
-				// Additional actions if the answer is correct
 			} else {
-				gp.ui.showMessage("Incorrect. Try again!");
-				// Additional actions if the answer is incorrect
+				text = "You cannot carry anymore. Inventory is full!";
 			}
-		} catch (NumberFormatException e) {
-			gp.ui.showMessage("Invalid input. Please enter a number.");
-		}
+			break;
+		case "Door":
+			if (hasKey > 0) {
+				gp.playSE(3);
+				gp.obj[i] = null;
+				hasKey--;
+				  // Remove a key from the inventory
+				  for (int j = 0; j < inventory.size(); j++) {
+					if ("Key".equals(inventory.get(j).name)) {
+						inventory.remove(j);
+						break;
+					}
+				}
+				gp.ui.showMessage("You opened the door!");
+			}
+			else {
+				gp.ui.showMessage("You need a key!");
+			}
+			break;
+		case "Chest":
+			gp.ui.gameFinished = true;
+			gp.stopMusic();
+			gp.playSE(4);
+			break;
+			
 	}
-
+}
+	}
+	
+	public void setDialogue1(){
+		dialogues[0] = "Q1:What is 1 + 2";
+		dialogues[1] = "Q2:What is 2 + 4";
+		dialogues[2] = "Q3:what is 3 + 5";
+		dialogues[3] = "Goodluck!";
+	}
 	
 	public void interactNPC(int i) {
 		if (i != 999) {
 			System.out.println("YOu are hitting an npc!");
+		gp.gameState=gp.dialogueState;
+		gp.npc[i].speak();
+			
 		}
 	}
 	
@@ -279,4 +264,6 @@ public class Player extends Entity{
 		
 		
 	}
+
+	
 }

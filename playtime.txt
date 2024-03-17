@@ -1,1 +1,25 @@
+<<<<<<< HEAD
 Playtime: 71.43333333333057 seconds
+=======
+Playtime: 32.20 seconds
+Playtime: 29.20 seconds
+Playtime: 37.00 seconds
+Playtime: 36.10 seconds
+Playtime: 44.83 seconds
+Playtime: 31.70 seconds
+Playtime: 27.83 seconds
+Playtime: 60.98 seconds
+Playtime: 60.98 seconds
+Playtime: 47.72 seconds
+Playtime: 47.72 seconds
+Playtime: 45.78 seconds
+Playtime: 45.78 seconds
+Playtime: 47.37 seconds
+Playtime: 47.37 seconds
+Playtime: 47.37 seconds
+Playtime: 55.38 seconds
+Playtime: 55.38 seconds
+Playtime: 55.38 seconds
+Playtime: 54.57 seconds
+Playtime: 33.97 seconds
+>>>>>>> 6b79efebd0082d32b733be5008596c94e2b175c6
