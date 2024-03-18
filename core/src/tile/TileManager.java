@@ -24,7 +24,7 @@ public class TileManager extends SceneManager{
 		MapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
 		getTileImage();
-		loadMap("/maps/world01.txt");
+		loadMap("/maps/world02.txt");
 	}
 	
     // Getter and Setter for tile and MapTileNum

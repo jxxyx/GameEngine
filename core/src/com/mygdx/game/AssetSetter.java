@@ -5,6 +5,8 @@ import object.Obj_Chest;
 import object.Obj_Door;
 import object.Obj_key;
 import entity.NPC_OldMan;
+import object.Obj_3;
+import object.Obj_5;
 import object.Obj_Boots;
 
 public class AssetSetter {
@@ -51,6 +53,18 @@ public class AssetSetter {
         gp.obj[7] = new Obj_Chest();
         gp.obj[7].worldX = 10 * gp.tileSize;
         gp.obj[7].worldY = 7 * gp.tileSize;
+
+        gp.obj[8] = new Obj_3();
+        gp.obj[8].worldX = 46 * gp.tileSize;
+        gp.obj[8].worldY = 9 * gp.tileSize;
+
+        gp.obj[9] = new Obj_5();
+        gp.obj[9].worldX = 45 * gp.tileSize;
+        gp.obj[9].worldY = 20 * gp.tileSize;
+
+        gp.obj[10] = new Obj_Chest();
+        gp.obj[10].worldX = 48 * gp.tileSize;
+        gp.obj[10].worldY = 43 * gp.tileSize;
     }
     public void setNPC() {
     	gp.npc[0] = new NPC_OldMan(gp);
