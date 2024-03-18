@@ -9,7 +9,7 @@ public class Obj_Boots extends SuperObject {
     public Obj_Boots() {
 
         name = "Boots";
-        description = "[" + name + "]\nA boots that will increase your speed.";
+        description = "[" + name + "]\nA boot that will increase your speed.";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
 
