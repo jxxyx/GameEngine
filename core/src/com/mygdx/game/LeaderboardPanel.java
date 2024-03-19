@@ -78,6 +78,12 @@ public class LeaderboardPanel extends SceneManager {
 	        y += gp.tileSize;
 	        g2.drawString(time, x, y);
 	    }
+	    
+		String text = "BACK";
+		x = getXforCenteredText(text);
+		y += gp.tileSize *3.5;
+		g2.drawString(text, x, y);
+		g2.drawString(">", x-gp.tileSize, y);
 	}
 	
 	public int getXforCenteredText(String text) {

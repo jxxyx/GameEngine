@@ -7,6 +7,7 @@ public class PlayerControl implements KeyListener{
 	
 	GamePanel gp;
 	MenuPanel mp;
+	LeaderboardPanel lp;
 	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
 	public PlayerControl(GamePanel gp) {
@@ -25,6 +26,10 @@ public class PlayerControl implements KeyListener{
 		//TITLE STATE
 		if(gp.gameState == gp.titleState) {
 			titleState(code);
+		}
+		//LEADERBOARD STATE
+		else if(gp.gameState == gp.leaderboardState) {
+			leaderboardState(code);
 		}
 		
 		// PLAY STATE
@@ -50,31 +55,37 @@ public class PlayerControl implements KeyListener{
 	}
 
 	public void titleState(int code) {
-		if(code == KeyEvent.VK_W) {
-			gp.mp.commandNum--;
-			if(gp.mp.commandNum < 0) {
-				gp.mp.commandNum = 1;
-			}
-		}
-		if(code == KeyEvent.VK_S) {
-			gp.mp.commandNum++;
-			if(gp.mp.commandNum > 1) {
-				gp.mp.commandNum = 0;
-			}
-		}
+	    if(code == KeyEvent.VK_W) {
+	        gp.mp.commandNum--;
+	        if(gp.mp.commandNum < 0) {
+	            gp.mp.commandNum = 2;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_S) {
+	        gp.mp.commandNum++;
+	        if(gp.mp.commandNum > 2) {
+	            gp.mp.commandNum = 0;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_ENTER) {
+	        if(gp.mp.commandNum == 0) {
+	            gp.gameState = gp.playState;
+	            gp.playMusic(0);
+	        }
+	        if(gp.mp.commandNum == 1) {
+	            gp.gameState = gp.leaderboardState;
+	        }
+	        if(gp.mp.commandNum == 2) {
+	            System.exit(0);
+	        }
+	    }
+	}
+	
+	public void leaderboardState(int code) {
 		if(code == KeyEvent.VK_ENTER) {
-			if(gp.mp.commandNum == 0) {
-				gp.gameState = gp.playState;
-				gp.playMusic(0);
-			}
-			if(gp.mp.commandNum == 1) {
-				gp.gameState = gp.leaderboardState;
-			  }
-		
-			  if(gp.mp.commandNum == 2) {
-				System.exit(0);
-			  }
-			
+			gp.gameState = gp.titleState;
 		}
 
 	}
