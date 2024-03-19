@@ -7,6 +7,7 @@ import object.Obj_key;
 import entity.NPC_OldMan;
 import object.Obj_3;
 import object.Obj_5;
+import object.Obj_8;
 import object.Obj_Boots;
 
 public class AssetSetter {
@@ -55,14 +56,14 @@ public class AssetSetter {
         gp.obj[7].worldY = 7 * gp.tileSize;
 
         gp.obj[8] = new Obj_3();
-        gp.obj[8].worldX = 46 * gp.tileSize;
+        gp.obj[8].worldX = 47 * gp.tileSize;
         gp.obj[8].worldY = 9 * gp.tileSize;
 
         gp.obj[9] = new Obj_5();
-        gp.obj[9].worldX = 45 * gp.tileSize;
+        gp.obj[9].worldX = 46 * gp.tileSize;
         gp.obj[9].worldY = 20 * gp.tileSize;
 
-        gp.obj[10] = new Obj_Chest();
+        gp.obj[10] = new Obj_8();
         gp.obj[10].worldX = 48 * gp.tileSize;
         gp.obj[10].worldY = 43 * gp.tileSize;
     }
