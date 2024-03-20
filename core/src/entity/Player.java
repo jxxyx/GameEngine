@@ -147,6 +147,9 @@ public class Player extends Entity{
 	// CHECK OBJECT NAME
 	switch (objectName) {
 		case "Key":
+		case "Answer 3":
+		case "Answer 5":
+		case "Answer 8":
 		case "Boots":
 			// CHECK IF INVENTORY IS FULL
 			if (inventory.size() != maxInventorySize) {
