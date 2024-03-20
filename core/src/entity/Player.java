@@ -88,7 +88,7 @@ public class Player extends Entity{
 				direction = "left";
 			}
 			else if(playerControl.rightPressed == true) {
-				direction = "right";
+				direction = "right";  
 			}
 			
 			// CHECK TILE COLLISION
@@ -159,10 +159,7 @@ public class Player extends Entity{
 					gp.gameState=gp.dialogueState;
 					setDialogue1();
 					gp.ui.currentDialogue = dialogues[dialogueIndex];
-					dialogueIndex++;
-				
-					
-					
+					dialogueIndex++;												
 					 // Call method to prompt math question based on key location
 				} else {
 					gp.playSE(2);
@@ -197,7 +194,18 @@ public class Player extends Entity{
 			gp.stopMusic();
 			gp.playSE(4);
 			break;
-			
+		case "Answer 3":
+		case "Answer 5":
+		case "Answer 8":
+			// CHECK IF INVENTORY IS FULL
+			if (inventory.size() != maxInventorySize) {
+				inventory.add(gp.obj[i]);
+				gp.obj[i] = null;
+				text = "Got a " + objectName + "!";
+			} else {
+				text = "You cannot carry anymore. Inventory is full!";
+			}
+			break;		
 	}
 }
 	}
