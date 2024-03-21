@@ -31,11 +31,12 @@ public class Entity {
 		this.gp = gp;
 	}
 	
-	public void setAction() {
+	public void performAIAction() {
 		
 	}
+	
 	public void update() {
-		setAction();
+		performAIAction();
 		
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
