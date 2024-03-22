@@ -29,6 +29,7 @@ public class UI {
 //	public int commandNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
+	private boolean hasWrittenPlaytimeToFile = false;
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
@@ -52,6 +53,8 @@ public class UI {
 		
 		g2.setFont(arial_40);
 		g2.setColor(Color.white);
+		
+		hasWrittenPlaytimeToFile = false;
 		
 		if(gameFinished == true) {
 			
@@ -83,8 +86,16 @@ public class UI {
 			y = gp.screenHeight/2 + (gp.tileSize*2);
 			g2.drawString(text, x, y);
 			
-		    // Writing playtime to a text file
-		    writePlaytimeToFile(playTime);
+			if (gameFinished == true && !hasWrittenPlaytimeToFile) {
+		        // Other code...
+
+		        // Writing playtime to a text file
+		        writePlaytimeToFile(playTime);
+
+		        hasWrittenPlaytimeToFile = true; // Marking that playtime has been written
+
+		        // Other code...
+		    }
 			
 			gp.gameThread = null;
 			
