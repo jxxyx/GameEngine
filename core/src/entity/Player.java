@@ -211,6 +211,7 @@ public class Player extends Entity{
 			// CHECK IF INVENTORY IS FULL
 			if (inventory.size() != maxInventorySize) {
 				inventory.add(gp.obj[i]);
+				gp.playSE(1);
 				gp.obj[i] = null;
 				text = "Got a " + objectName + "!";
 			} else {

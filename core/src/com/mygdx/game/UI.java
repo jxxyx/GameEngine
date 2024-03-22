@@ -74,7 +74,7 @@ public class UI {
 			// TIME
 			if (gp.gameState != gp.pauseState && gp.gameState != gp.characterState && gp.gameState != gp.gameOverState) {
 				playTime += (double)1/60;
-				g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*11, 65);
+				g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*14, 65);
 			}
 
 			
@@ -194,7 +194,7 @@ public class UI {
 
 	public void drawCharacterScreen() {
 		final int frameX = gp.tileSize*2;
-		final int frameY = gp.tileSize*2;
+		final int frameY = gp.tileSize;
 		final int framWidth = gp.tileSize*5;
 		final int frameHeight = gp.tileSize*10;
 		drawSubWindow(frameX, frameY, framWidth, frameHeight);
@@ -212,7 +212,7 @@ public class UI {
 	}
 
 	public void drawInventory() {
-		final int frameX = gp.tileSize*9;
+		final int frameX = gp.tileSize*12;
 		final int frameY = gp.tileSize;
 		final int framWidth = gp.tileSize*6;
 		final int frameHeight = gp.tileSize*5;
