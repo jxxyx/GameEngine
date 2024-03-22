@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
+import leaderboard.LeaderboardPanel;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public UI ui = new UI(this);
 	public MenuPanel mp = new MenuPanel(this);
 	public LeaderboardPanel lp = new LeaderboardPanel(this);
+	public LevelPanel glp = new LevelPanel(this);
 	Thread gameThread;
 
 	// ENTITY OBJECT
@@ -59,9 +61,12 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int titleState = 0;
 	public final int playState = 1;
 	public final int leaderboardState = 2;
-	public final int pauseState = 3;
-	public final int characterState= 4;
-	public final int dialogueState = 5;
+	public final int gameLevelState = 3;
+	public final int pauseState = 4;
+	public final int characterState= 5;
+	public final int dialogueState = 6;
+	public final int gameOverState = 7;
+	public int gameDifficulty = 0;
 
 
 	public GamePanel() {
@@ -83,7 +88,36 @@ public class GamePanel extends JPanel implements Runnable{
 		//playMusic(0);
 		gameState = titleState;
 	}
+	
+	public void resetGame() {
+	    // Stop the current game thread if it's running
+	    if (gameThread != null) {
+	        gameThread.interrupt();
+	    }
 
+	    // Reset player variables and state
+	    player.setDefaultValues();
+	    player.resetDialogueIndex();
+		aSetter.setObject();
+		aSetter.setNPC();
+	    player.inventory.clear();
+	    player.hasKey = 0;
+	    
+		ui.resetUIVariables();
+	}
+	
+	public void quitToMainMenu() {
+	    player.setDefaultValues();
+	    player.resetDialogueIndex();
+		aSetter.setObject();
+		aSetter.setNPC();
+	    player.inventory.clear();
+		
+		ui.resetUIVariables();
+
+
+
+	}
 
 	public void startGameThread() {
 		
@@ -138,9 +172,6 @@ public class GamePanel extends JPanel implements Runnable{
 		if(gameState == pauseState) {
 			//nothing
 		}
-		
-		//System.out.println(gameState);
-
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -153,6 +184,9 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 		else if(gameState == leaderboardState) {
 			lp.draw(g2);
+		}
+		else if(gameState == gameLevelState) {
+			glp.draw(g2);
 		}
 		// OTHERS
 		else {

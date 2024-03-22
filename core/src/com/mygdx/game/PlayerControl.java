@@ -3,11 +3,15 @@ package com.mygdx.game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import leaderboard.LeaderboardPanel;
+
 public class PlayerControl implements KeyListener{
 	
 	GamePanel gp;
 	MenuPanel mp;
 	LeaderboardPanel lp;
+	LevelPanel glp;
+	UI ui;
 	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
 	public PlayerControl(GamePanel gp) {
@@ -30,6 +34,10 @@ public class PlayerControl implements KeyListener{
 		//LEADERBOARD STATE
 		else if(gp.gameState == gp.leaderboardState) {
 			leaderboardState(code);
+		} 
+		
+		else if(gp.gameState == gp.gameLevelState) {
+			gameLevelState(code);
 		}
 		
 		// PLAY STATE
@@ -45,10 +53,14 @@ public class PlayerControl implements KeyListener{
 				gp.gameState = gp.playState;
 			}
 		}
-
 		//character state
 		else if(gp.gameState == gp.characterState) {
 			characterState(code);
+			
+		}
+		//game over state
+		else if(gp.gameState == gp.gameOverState) {
+			gameOverState(code);
 			
 		}
 	
@@ -71,8 +83,8 @@ public class PlayerControl implements KeyListener{
 	    
 	    if(code == KeyEvent.VK_ENTER) {
 	        if(gp.mp.commandNum == 0) {
-	            gp.gameState = gp.playState;
-	            gp.playMusic(0);
+	            gp.gameState = gp.gameLevelState;
+
 	        }
 	        if(gp.mp.commandNum == 1) {
 	            gp.gameState = gp.leaderboardState;
@@ -87,6 +99,42 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_ENTER) {
 			gp.gameState = gp.titleState;
 		}
+
+	}
+	
+	public void gameLevelState(int code) {
+		
+	    if(code == KeyEvent.VK_W) {
+	        gp.glp.commandNum--;
+	        if(gp.glp.commandNum < 0) {
+	            gp.glp.commandNum = 2;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_S) {
+	        gp.glp.commandNum++;
+	        if(gp.glp.commandNum > 2) {
+	            gp.glp.commandNum = 0;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_ENTER) {
+	        if(gp.glp.commandNum == 0) {
+	            gp.gameState = gp.playState;
+	            gp.gameDifficulty = 0;
+	            gp.playMusic(0);
+	        }
+	        if(gp.glp.commandNum == 1) {
+	            gp.gameState = gp.playState;
+	            gp.gameDifficulty = 1;
+	            gp.playMusic(0);
+	        }		
+	        if(gp.glp.commandNum == 2) {
+	            gp.gameState = gp.playState;
+	            gp.gameDifficulty = 2;
+	            gp.playMusic(0);
+	        }
+	    }
 
 	}
 
@@ -156,6 +204,33 @@ public class PlayerControl implements KeyListener{
 			gp.playSE(5);
 			}
 		}
+	}
+	
+	public void gameOverState(int code) {
+	    if(code == KeyEvent.VK_W) {
+	        gp.ui.commandNum--;
+	        if(gp.ui.commandNum < 0) {
+	            gp.ui.commandNum = 1;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_S) {
+	        gp.ui.commandNum++;
+	        if(gp.ui.commandNum > 1) {
+	            gp.ui.commandNum = 0;
+	        }
+	    }
+	    
+	    if(code == KeyEvent.VK_ENTER) {
+	        if(gp.ui.commandNum == 0) {
+        		gp.resetGame();
+	            gp.gameState = gp.gameLevelState;
+	        }
+	        if(gp.ui.commandNum == 1) {
+	        	gp.quitToMainMenu();
+	            gp.gameState = gp.titleState;
+	        }		
+	    }
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package leaderboard;
 
 public class PlayerRecord {
     private String playerName;

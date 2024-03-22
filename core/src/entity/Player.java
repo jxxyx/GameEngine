@@ -43,6 +43,7 @@ public class Player extends Entity{
 		setDefaultValues();
 		getPlayerImage();
 		setItems();
+//		resetDialogueIndex();
 	}
 	
 	public void setDefaultValues() {
@@ -157,7 +158,16 @@ public class Player extends Entity{
 					hasKey++;
 					gp.ui.showMessage("You got a key!");
 					gp.gameState=gp.dialogueState;
-					setDialogue1();
+					if(gp.gameDifficulty == 0) {
+						setDialogueEasy();
+					} 
+					else if(gp.gameDifficulty == 1) {
+						setDialogueMedium();
+					}
+					else if(gp.gameDifficulty == 2) {
+						setDialogueHard();
+					}
+
 					gp.ui.currentDialogue = dialogues[dialogueIndex];
 					dialogueIndex++;												
 					 // Call method to prompt math question based on key location
@@ -191,6 +201,7 @@ public class Player extends Entity{
 			break;
 		case "Chest":
 			gp.ui.gameFinished = true;
+			gp.gameState = gp.gameOverState;
 			gp.stopMusic();
 			gp.playSE(4);
 			break;
@@ -210,11 +221,22 @@ public class Player extends Entity{
 }
 	}
 	
-	public void setDialogue1(){
+	private void setDialogueEasy(){
 		dialogues[0] = "Q1:What is 1 + 2";
 		dialogues[1] = "Q2:What is 2 + 4";
-		dialogues[2] = "Q3:what is 3 + 5";
-		dialogues[3] = "Goodluck!";
+		dialogues[2] = "Q3:What is 3 + 5";
+	}
+	
+	private void setDialogueMedium(){
+		dialogues[0] = "Q1:What is 8 x 7";
+		dialogues[1] = "Q2:What is 12 - 16";
+		dialogues[2] = "Q3:What is 25 ÷ 5";
+	}
+	
+	private void setDialogueHard(){
+		dialogues[0] = "Q1:What is 2 raised to the power of 4";
+		dialogues[1] = "Q2:What is the squareroot of 64";
+		dialogues[2] = "Q3:What is 12 x 35";
 	}
 	
 	public void interactNPC(int i) {
@@ -225,6 +247,10 @@ public class Player extends Entity{
 			
 		}
 	}
+	
+    public void resetDialogueIndex() {
+        dialogueIndex = 0;
+    }
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);
