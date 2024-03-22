@@ -67,8 +67,10 @@ public class NPC_OldMan extends Entity implements AI_controller{
 		}
 	}
 	public void speak() {
-		gp.ui.currentDialogue = dialogues[dialogueIndex];
-		dialogueIndex++;
-
+		if(dialogueIndex < dialogues.length) {
+			gp.ui.currentDialogue = dialogues[dialogueIndex];
+			gp.gameState = gp.dialogueState; // Keep the dialogue state active
+			dialogueIndex++;
+		}
 	}
 }
