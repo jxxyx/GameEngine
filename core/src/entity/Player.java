@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -24,14 +26,15 @@ public class Player extends Entity{
 	private Scanner scanner;
 	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
 	public final int maxInventorySize = 20;
+	public List<SuperObject> currentNumber = new ArrayList<>();
+	public int answer;
 
-	
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		super(gp);
 		
 		this.playerControl = playerControl;
 		this.scanner = new Scanner(System.in);
-		//return the halfway point of the screen
+		//return the halfway point of the screen	
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
@@ -252,6 +255,17 @@ public class Player extends Entity{
     public void resetDialogueIndex() {
         dialogueIndex = 0;
     }
+
+	public void selectItem() {
+		int itemIndex = gp.ui.getItemIndexOnSlot();
+		if (itemIndex < inventory.size()) {
+			SuperObject selectedItem = inventory.get(itemIndex);
+			if (selectedItem.type == selectedItem.getTypeNumber()) {
+				currentNumber.add(selectedItem);
+				answer += selectedItem.value;
+			}
+		}
+	}
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);

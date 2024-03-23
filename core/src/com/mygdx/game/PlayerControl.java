@@ -204,6 +204,9 @@ public class PlayerControl implements KeyListener{
 			gp.playSE(5);
 			}
 		}
+		if (code == KeyEvent.VK_ENTER) {
+			gp.player.selectItem();
+		}
 	}
 	
 	public void gameOverState(int code) {

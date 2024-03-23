@@ -9,6 +9,8 @@ public class Obj_8 extends SuperObject {
     public Obj_8(){
 
         name = "Answer 8";
+        value = 8;
+        type = type_number;
         description = "[" + name + "]\nA solution to a question.";
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/objects/number_8.png"));

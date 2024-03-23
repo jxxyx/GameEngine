@@ -229,6 +229,15 @@ public class UI {
 
 		//DRAW PLAYERS ITEMS IN INVENTORY
 		for(int i = 0; i < gp.player.inventory.size(); i++) {
+
+			// equip cursor
+			
+			if (gp.player.currentNumber.contains(gp.player.inventory.get(i))) {
+				g2.setColor(new Color(240,190,90));
+				g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
+			}
+			
+
 			Image scaledImage = gp.player.inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
 			g2.drawImage(scaledImage, slotX, slotY, null);
 
