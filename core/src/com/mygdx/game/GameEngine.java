@@ -19,7 +19,6 @@ public class GameEngine extends ApplicationAdapter {
         window.setUndecorated(true);
         
         GamePanel gamePanel = new GamePanel(); // Initialize GamePanel
-        
         // Add GamePanel to the window's content pane
         window.getContentPane().add(gamePanel);
 

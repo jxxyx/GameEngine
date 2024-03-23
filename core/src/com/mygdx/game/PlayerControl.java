@@ -106,13 +106,13 @@ public class PlayerControl implements KeyListener{
 	    if(code == KeyEvent.VK_W) {
 	        gp.glp.commandNum--;
 	        if(gp.glp.commandNum < 0) {
-	            gp.glp.commandNum = 2;
+	            gp.glp.commandNum = 3;
 	        }
 	    }
 	    
 	    if(code == KeyEvent.VK_S) {
 	        gp.glp.commandNum++;
-	        if(gp.glp.commandNum > 2) {
+	        if(gp.glp.commandNum > 3) {
 	            gp.glp.commandNum = 0;
 	        }
 	    }
@@ -132,6 +132,10 @@ public class PlayerControl implements KeyListener{
 	            gp.gameState = gp.playState;
 	            gp.gameDifficulty = 2;
 	            gp.playMusic(0);
+	        }
+	        
+	        if(gp.glp.commandNum == 3) {
+	            gp.gameState = gp.titleState;
 	        }
 	    }
 
