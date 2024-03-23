@@ -17,6 +17,16 @@ public class SuperObject {
     public int solidAreaDefaultY = 0;
     public String description = "";
 
+    public int value = 0;
+
+    //Type
+    public int type;
+    public final int type_number = 0;
+
+    public int getTypeNumber() {
+        return type_number;
+    }
+
 
     public void draw(Graphics2D g2, GamePanel gp) {
         

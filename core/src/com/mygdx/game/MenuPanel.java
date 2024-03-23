@@ -82,7 +82,7 @@ public class MenuPanel extends SceneManager{
 			g2.drawString(">", x-gp.tileSize, y);
 		}
 		
-		text = "QUIT";
+		text = "EXIT";
 		x = getXforCenteredText(text);
 		y += gp.tileSize;
 		g2.drawString(text, x, y);

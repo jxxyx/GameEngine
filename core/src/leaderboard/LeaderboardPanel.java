@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package leaderboard;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import com.mygdx.game.GamePanel;
+import com.mygdx.game.SceneManager;
+
 public class LeaderboardPanel extends SceneManager {
 	
-	GamePanel gp;
 	Graphics2D g2;
-	public UI ui = new UI(gp);
     Font arial_40, arial_80B;
     public int commandNum = 0;
     String playTime; 

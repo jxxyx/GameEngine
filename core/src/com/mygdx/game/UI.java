@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.IOException;	
 import java.text.DecimalFormat;
 import java.awt.Image;
 
@@ -56,51 +56,16 @@ public class UI {
 		g2.setFont(arial_40);
 		g2.setColor(Color.white);
 		
-		hasWrittenPlaytimeToFile = false;
-		
-		if(gameFinished == true) {
-			
-			g2.setFont(arial_40);
-			g2.setColor(Color.white);
-			
-			String text;
-			int textLength;
-			int x;
-			int y;
-			
-			text = "You found the treasure!";
-			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-			x = gp.screenWidth/2 - textLength/2;
-			y = gp.screenHeight/2 - (gp.tileSize*3);
-			g2.drawString(text, x, y);
-			
-			text = "Your time is: " + dFormat.format(playTime) + "!";
-			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-			x = gp.screenWidth/2 - textLength/2;
-			y = gp.screenHeight/2 - (gp.tileSize*4);
-			g2.drawString(text, x, y);
-			
-			g2.setFont(arial_80B);
-			g2.setColor(Color.yellow);
-			text = "Congratulations!";
-			textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-			x = gp.screenWidth/2 - textLength/2;
-			y = gp.screenHeight/2 + (gp.tileSize*2);
-			g2.drawString(text, x, y);
-			
-			if (gameFinished == true && !hasWrittenPlaytimeToFile) {
-		        // Other code...
-
-		        // Writing playtime to a text file
+		//GameOver State
+		if(gp.gameState == gp.gameOverState){
+			drawGameOverScene();
+//			gp.gameThread = null;
+			if(gameFinished == true && !hasWrittenPlaytimeToFile) {
 		        writePlaytimeToFile(playTime);
+		        hasWrittenPlaytimeToFile = true; // Marking that play time has been written
+			}
 
-		        hasWrittenPlaytimeToFile = true; // Marking that playtime has been written
-
-		        // Other code...
-		    }
-			
-			gp.gameThread = null;
-			
+//			gp.startGameThread();
 		}
 		else {
 			g2.setFont(arial_40);
@@ -143,6 +108,44 @@ public class UI {
 		// OPTIONS STATE
 		if(gp.gameState == gp.optionsState) {
 			drawOptionsScreen();
+		}
+	}
+	
+	public void drawGameOverScene() {
+		g2.setColor(new Color(0, 0, 0, 150));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30f));
+		//Shadow
+		String text = "CONGRATULATIONS !!";
+		int x = getXforCenteredText(text);
+		int y = gp.tileSize * 4;
+		g2.drawString(text, x, y);
+		//Main
+		g2.setColor(Color.white);
+		g2.drawString(text, x-4, y-4);
+		//Time
+		text = "Your time is: " + dFormat.format(playTime) + "!";
+		int textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+		x = getXforCenteredText(text);
+		y = gp.tileSize;
+		g2.drawString(text, x, y);
+		//Retry
+		g2.setFont(g2.getFont().deriveFont(30f));
+		text = "Replay";
+		x = getXforCenteredText(text);
+		y = gp.tileSize * 8;
+		g2.drawString(text, x, y);
+		if(commandNum == 0) {
+			g2.drawString(">", x-gp.tileSize, y);
+		}
+		//Quit
+		text = "Quit";
+		x = getXforCenteredText(text);
+		y += 55;
+		g2.drawString(text, x, y);
+		if(commandNum == 1) {
+			g2.drawString(">", x-gp.tileSize, y);
 		}
 	}
 
@@ -203,6 +206,15 @@ public class UI {
 
 		//DRAW PLAYERS ITEMS IN INVENTORY
 		for(int i = 0; i < gp.player.inventory.size(); i++) {
+
+			// equip cursor
+			
+			if (gp.player.currentNumber.contains(gp.player.inventory.get(i))) {
+				g2.setColor(new Color(240,190,90));
+				g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
+			}
+			
+
 			Image scaledImage = gp.player.inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
 			g2.drawImage(scaledImage, slotX, slotY, null);
 
@@ -478,7 +490,13 @@ public class UI {
 		}
 
 	}
-
+	
+	public void resetUIVariables() {
+	    gameFinished = false;
+	    hasWrittenPlaytimeToFile = false;
+	    playTime = 0.0;
+	}
+	
 	public int getItemIndexOnSlot(){
 		int itemIndex = slotCol + (slotRow * 5);
 		return itemIndex;
@@ -492,7 +510,7 @@ public class UI {
 	
 	private void writePlaytimeToFile(double playTime) {
 	    try (BufferedWriter writer = new BufferedWriter(new FileWriter("playtime.txt", true))) {
-	        // Append the playtime to the file
+	        // Append the play time to the file
 	        writer.write("Playtime: " + dFormat.format(playTime) + " seconds\n");
 	    } catch (IOException e) {
 	        e.printStackTrace(); // Handle the exception appropriately in your actual application
