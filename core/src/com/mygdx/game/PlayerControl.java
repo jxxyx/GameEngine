@@ -8,7 +8,8 @@ public class PlayerControl implements KeyListener{
 	GamePanel gp;
 	MenuPanel mp;
 	LeaderboardPanel lp;
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+
 	
 	public PlayerControl(GamePanel gp) {
 		this.gp = gp;
@@ -36,10 +37,6 @@ public class PlayerControl implements KeyListener{
 		if(gp.gameState == gp.playState) {
 			playState(code);
 		} 
-		//pause state
-		else if(gp.gameState == gp.pauseState) {
-			pauseState(code);
-		} 
 		else if (gp.gameState == gp.dialogueState){
 			if(code == KeyEvent.VK_ENTER){
 				gp.gameState = gp.playState;
@@ -49,9 +46,11 @@ public class PlayerControl implements KeyListener{
 		//character state
 		else if(gp.gameState == gp.characterState) {
 			characterState(code);
-			
 		}
-	
+		// Options state
+		else if(gp.gameState == gp.optionsState) {
+			optionsState(code);
+		}
 	}
 
 	public void titleState(int code) {
@@ -107,25 +106,23 @@ public class PlayerControl implements KeyListener{
 		}
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.characterState;
-
 		}
-		if(code == KeyEvent.VK_P) {
+		// if(code == KeyEvent.VK_P) {
+		// 	if(gp.gameState == gp.playState) {
+		// 		gp.gameState = gp.pauseState;
+		// 	}
+		// }
+		if(code == KeyEvent.VK_ENTER){
+			enterPressed = true;
+		}
+		if(code == KeyEvent.VK_ESCAPE) {
 			if(gp.gameState == gp.playState) {
-				gp.gameState = gp.pauseState;
-			}
-		}
-	}
-
-
-
-	public void pauseState(int code) {
-		if(code == KeyEvent.VK_P) {
-			if(gp.gameState == gp.pauseState) {
-				gp.gameState = gp.playState;
+				gp.gameState = gp.optionsState;
 			}
 		}
 	
 	}
+
 
 	public void characterState(int code) {
 		if(code == KeyEvent.VK_C) {
@@ -158,6 +155,66 @@ public class PlayerControl implements KeyListener{
 		}
 	}
 
+	public void optionsState(int code) {
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.playState;
+			
+		}
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+		}
+
+		int maxCommandNum = 0;
+		switch(gp.ui.subState){
+			case 0 : maxCommandNum = 5; break;
+			case 3 : maxCommandNum = 1; break;
+		}
+
+		if(code == KeyEvent.VK_W) {
+			gp.ui.commandNum--;
+			gp.playSE(5);
+			if(gp.ui.commandNum < 0){
+				gp.ui.commandNum = maxCommandNum;
+			}
+		}
+
+		if(code == KeyEvent.VK_S) {
+			gp.ui.commandNum++;
+			gp.playSE(5);
+			if(gp.ui.commandNum > maxCommandNum){
+				gp.ui.commandNum = 0;
+			}
+		}
+		if(code == KeyEvent.VK_A){
+			if(gp.ui.subState == 0){
+				if(gp.ui.commandNum == 1 && gp.music.volumeScale > 0){
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+					gp.playSE(5);
+				}
+				if(gp.ui.subState == 0){
+					if(gp.ui.commandNum == 2 && gp.SE.volumeScale > 0){
+						gp.SE.volumeScale--;
+						gp.playSE(5);
+					}
+				}
+			}
+		}
+		if(code == KeyEvent.VK_D){
+			if(gp.ui.subState == 0){
+				if(gp.ui.commandNum == 1 && gp.music.volumeScale < 5){
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+					gp.playSE(5);
+				}
+				if(gp.ui.commandNum == 2 && gp.SE.volumeScale < 5){
+					gp.SE.volumeScale++;
+					gp.playSE(5);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
@@ -177,7 +234,9 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_D) {
 			rightPressed = false;
 		}
-		
+		if(code == KeyEvent.VK_ENTER){
+			enterPressed = false;
+		}
 	}
 
 }
