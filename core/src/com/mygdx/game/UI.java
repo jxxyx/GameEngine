@@ -33,8 +33,7 @@ public class UI {
 	public int commandNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
-	int subState = 0;
-	private boolean hasWrittenPlaytimeToFile = false;
+		private boolean hasWrittenPlaytimeToFile = false;
 	public int subState = 0;
 
 	double playTime;

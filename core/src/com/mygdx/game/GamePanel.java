@@ -79,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int gameOverState = 7;
 	public final int qnaState = 8;
 	public int gameDifficulty = 0;
-	public final int optionsState = 8;
+	public final int optionsState = 9;
 
 
 	public GamePanel() {
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) tempScreen.getGraphics();
 
-		setFullScreen();
+		// setFullScreen();
 	}
 	
 	public void resetGame() {

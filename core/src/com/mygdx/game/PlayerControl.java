@@ -12,7 +12,7 @@ public class PlayerControl implements KeyListener{
 	LeaderboardPanel lp;
 	LevelPanel glp;
 	UI ui;
-	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, escapePressed, enterPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, escapePressed;
 
 	
 	public PlayerControl(GamePanel gp) {
@@ -268,10 +268,10 @@ public class PlayerControl implements KeyListener{
 			if (code == KeyEvent.VK_ESCAPE) {
 				gp.ui.subState = 0;
 			}
-		}
-	        }		
-	    }
-	}
+			}
+	    }		
+	    
+	
 
 	public void optionsState(int code) {
 		if(code == KeyEvent.VK_ESCAPE) {
