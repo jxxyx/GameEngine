@@ -12,7 +12,7 @@ public class PlayerControl implements KeyListener{
 	LeaderboardPanel lp;
 	LevelPanel glp;
 	UI ui;
-	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, escapePressed;
 
 	
 	public PlayerControl(GamePanel gp) {
@@ -63,6 +63,9 @@ public class PlayerControl implements KeyListener{
 			gameOverState(code);
 			
 		}
+		else if(gp.gameState == gp.qnaState) {
+			qnaState(code);
+		}
 	}
 
 	public void titleState(int code) {
@@ -106,13 +109,13 @@ public class PlayerControl implements KeyListener{
 	    if(code == KeyEvent.VK_W) {
 	        gp.glp.commandNum--;
 	        if(gp.glp.commandNum < 0) {
-	            gp.glp.commandNum = 2;
+	            gp.glp.commandNum = 3;
 	        }
 	    }
 	    
 	    if(code == KeyEvent.VK_S) {
 	        gp.glp.commandNum++;
-	        if(gp.glp.commandNum > 2) {
+	        if(gp.glp.commandNum > 3) {
 	            gp.glp.commandNum = 0;
 	        }
 	    }
@@ -132,6 +135,10 @@ public class PlayerControl implements KeyListener{
 	            gp.gameState = gp.playState;
 	            gp.gameDifficulty = 2;
 	            gp.playMusic(0);
+	        }
+	        
+	        if(gp.glp.commandNum == 3) {
+	            gp.gameState = gp.titleState;
 	        }
 	    }
 
@@ -176,7 +183,10 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.playState;
 		}
+		playerInventory(code);
+	}
 
+	public void playerInventory(int code) {
 		if(code == KeyEvent.VK_W) {
 			if(gp.ui.slotRow != 0){
 			gp.ui.slotRow--;
@@ -232,6 +242,36 @@ public class PlayerControl implements KeyListener{
 	        }		
 	    }
 	}
+
+	public void qnaState(int code) {
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+		}
+		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_W) {
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = 2;
+				}
+				gp.playSE(9);
+			}
+			if (code == KeyEvent.VK_S) {
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > 2) {
+					gp.ui.commandNum = 0;
+				}
+				gp.playSE(9);
+			}
+		}
+		if (gp.ui.subState == 1) {
+			playerInventory(code);
+			if (code == KeyEvent.VK_ESCAPE) {
+				gp.ui.subState = 0;
+			}
+			}
+	    }		
+	    
+	
 
 	public void optionsState(int code) {
 		if(code == KeyEvent.VK_ESCAPE) {
@@ -312,9 +352,13 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_D) {
 			rightPressed = false;
 		}
-		if(code == KeyEvent.VK_ENTER){
+		if(code == KeyEvent.VK_ESCAPE) {
+			escapePressed = false;
+		}
+		if(code == KeyEvent.VK_ENTER) {
 			enterPressed = false;
 		}
+		
 	}
 
 }

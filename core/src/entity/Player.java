@@ -27,7 +27,8 @@ public class Player extends Entity{
 	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
 	public final int maxInventorySize = 20;
 	public List<SuperObject> currentNumber = new ArrayList<>();
-	public int answer;
+	public String answer = "";
+	public int npcIndex;
 
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		super(gp);
@@ -53,7 +54,7 @@ public class Player extends Entity{
 		
 		worldX = gp.tileSize * 33;
 		worldY = gp.tileSize * 21;
-		speed= 4;
+		speed= 10;
 		direction = "down";
 	}
 
@@ -104,7 +105,7 @@ public class Player extends Entity{
 			pickUpObject(objIndex);
 			
 			// CHECK NPC COLLISION
-			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
@@ -160,19 +161,7 @@ public class Player extends Entity{
 					gp.playSE(1);
 					hasKey++;
 					gp.ui.showMessage("You got a key!");
-					gp.gameState=gp.dialogueState;
-					if(gp.gameDifficulty == 0) {
-						setDialogueEasy();
-					} 
-					else if(gp.gameDifficulty == 1) {
-						setDialogueMedium();
-					}
-					else if(gp.gameDifficulty == 2) {
-						setDialogueHard();
-					}
-
-					gp.ui.currentDialogue = dialogues[dialogueIndex];
-					dialogueIndex++;												
+					// gp.gameState=gp.dialogueState;											
 					 // Call method to prompt math question based on key location
 				} else {
 					gp.playSE(2);
@@ -222,25 +211,40 @@ public class Player extends Entity{
 			}
 			break;		
 	}
+	}
 }
+	
+	public void setDialogueEasy(){
+		dialogues[0][0] = "Q1: What is 1 + 2";
+		dialogues[0][1] = "3";
+		
+		dialogues[1][0] = "Q2: What is 2 + 3";
+		dialogues[1][1] = "5";
+		
+		dialogues[2][0] = "Q3: What is 3 + 5";
+		dialogues[2][1] = "8";
 	}
 	
-	private void setDialogueEasy(){
-		dialogues[0] = "Q1:What is 1 + 2";
-		dialogues[1] = "Q2:What is 2 + 4";
-		dialogues[2] = "Q3:What is 3 + 5";
+	public void setDialogueMedium(){
+		dialogues[0][0] = "Q1:What is 8 x 7";
+		dialogues[0][1] = "56";
+
+		dialogues[1][0] = "Q2:What is 9 x 3";
+		dialogues[1][1] = "27";
+
+		dialogues[2][0] = "Q3:What is 25 ÷ 5";
+		dialogues[2][1] = "5";
 	}
 	
-	private void setDialogueMedium(){
-		dialogues[0] = "Q1:What is 8 x 7";
-		dialogues[1] = "Q2:What is 12 - 16";
-		dialogues[2] = "Q3:What is 25 ÷ 5";
-	}
-	
-	private void setDialogueHard(){
-		dialogues[0] = "Q1:What is 2 raised to the power of 4";
-		dialogues[1] = "Q2:What is the squareroot of 64";
-		dialogues[2] = "Q3:What is 12 x 35";
+	public void setDialogueHard(){
+		dialogues[0][0] = "Q1:What is 2 raised to the power of 4";
+		dialogues[0][1] = "16";
+
+		dialogues[1][0] = "Q2:What is the squareroot of 64";
+		dialogues[1][1] = "8";
+
+		dialogues[2][0] = "Q3:What is 12 x 35";
+		dialogues[2][1] = "420";
 	}
 	
 	public void interactNPC(int i) {
@@ -260,7 +264,9 @@ public class Player extends Entity{
 		int itemIndex = gp.ui.getItemIndexOnSlot();
 		if (itemIndex < inventory.size()) {
 			SuperObject selectedItem = inventory.get(itemIndex);
-			if (selectedItem.type == selectedItem.getTypeNumber()) {
+			if (currentNumber.contains(selectedItem)) {
+				currentNumber.remove(selectedItem);
+			} else {
 				currentNumber.add(selectedItem);
 				answer += selectedItem.value;
 			}
