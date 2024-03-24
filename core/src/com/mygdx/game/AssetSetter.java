@@ -4,6 +4,7 @@ package com.mygdx.game;
 import object.Obj_Chest;
 import object.Obj_Door;
 import object.Obj_key;
+import entity.NPC_Merchant;
 import entity.NPC_OldMan;
 import object.Obj_3;
 import object.Obj_5;
@@ -39,17 +40,17 @@ public class AssetSetter {
         gp.obj[3].worldX = 37 * gp.tileSize;
         gp.obj[3].worldY = 42 * gp.tileSize;
 
-        gp.obj[4] = new Obj_Door();
-        gp.obj[4].worldX = 10 * gp.tileSize;
-        gp.obj[4].worldY = 11 * gp.tileSize;
+        // gp.obj[4] = new Obj_Door();
+        // gp.obj[4].worldX = 10 * gp.tileSize;
+        // gp.obj[4].worldY = 11 * gp.tileSize;
 
-        gp.obj[5] = new Obj_Door();
-        gp.obj[5].worldX = 8 * gp.tileSize;
-        gp.obj[5].worldY = 22 * gp.tileSize;
+        // gp.obj[5] = new Obj_Door();
+        // gp.obj[5].worldX = 8 * gp.tileSize;
+        // gp.obj[5].worldY = 22 * gp.tileSize;
 
-        gp.obj[6] = new Obj_Door();
-        gp.obj[6].worldX = 12 * gp.tileSize;
-        gp.obj[6].worldY = 22 * gp.tileSize;
+        // gp.obj[6] = new Obj_Door();
+        // gp.obj[6].worldX = 12 * gp.tileSize;
+        // gp.obj[6].worldY = 22 * gp.tileSize;
 
         gp.obj[7] = new Obj_Chest();
         gp.obj[7].worldX = 10 * gp.tileSize;
@@ -71,5 +72,13 @@ public class AssetSetter {
     	gp.npc[0] = new NPC_OldMan(gp);
     	gp.npc[0].worldX = gp.tileSize*21;
     	gp.npc[0].worldY = gp.tileSize*21;
+
+        gp.npc[1] = new NPC_Merchant(gp);
+        gp.npc[1].worldX = 10 * gp.tileSize;
+        gp.npc[1].worldY = 11 * gp.tileSize;
+    
+        gp.npc[2] = new NPC_Merchant(gp);
+        gp.npc[2].worldX = 8 * gp.tileSize;
+        gp.npc[2].worldY = 22 * gp.tileSize;
     }
 }

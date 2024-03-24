@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.awt.Image;
 
+import entity.Entity;
+
 // import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import object.Obj_key;
+import object.SuperObject;
 
 public class UI {
 
@@ -29,10 +32,13 @@ public class UI {
 	int commandNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
+	int subState = 0;
 	private boolean hasWrittenPlaytimeToFile = false;
 	
 	double playTime;
 	DecimalFormat dFormat = new DecimalFormat("#0.00");
+
+	public Entity npc;
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -117,11 +123,13 @@ public class UI {
 //		        writePlaytimeToFile(playTime);
 //
 //		        hasWrittenPlaytimeToFile = true; // Marking that playtime has been written
-//
 //		    }
 //		}
 		
-		
+		// TRADE STATE
+		if (gp.gameState == gp.qnaState) {
+			drawQnaScreen();
+		}
 		
 	}
 	
@@ -174,9 +182,9 @@ public class UI {
 
 	public void drawDialogueScreen(){
 		//window
-		int x = gp.tileSize*2;
+		int x = gp.tileSize*3;
 		int y = gp.tileSize/2;
-		int width = gp.screenWidth - (gp.tileSize*4);
+		int width = gp.screenWidth - (gp.tileSize*6);
 		int height = gp.tileSize*5;
 
 		drawSubWindow(x, y, width, height);
@@ -212,6 +220,8 @@ public class UI {
 	}
 
 	public void drawInventory() {
+
+		//frame
 		final int frameX = gp.tileSize*12;
 		final int frameY = gp.tileSize;
 		final int framWidth = gp.tileSize*6;
@@ -292,6 +302,81 @@ public class UI {
 		}
 
 	}
+
+	public void drawQnaScreen() {
+		switch(subState) {
+			case 0: qna_screen(); break;
+			case 1: answer_select(); break;
+		}
+	}
+	public void qna_screen() {
+		drawDialogueScreen();
+
+		// DRAW WINDOW
+		int x = gp.tileSize * 15;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int)(gp.tileSize * 3.5);
+		drawSubWindow(x,y,width,height);
+
+		// DRAW TEXTS
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Answer", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.playerControl.enterPressed == true) {
+				subState = 1;
+			}
+		}
+		y += gp.tileSize;
+
+
+		y += gp.tileSize;
+		g2.drawString("Leave", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.playerControl.enterPressed == true) {
+				commandNum = 0;
+				gp.gameState = gp.dialogueState;
+				currentDialogue = "Come again, hehe!";
+			}
+		}
+		
+	}
+	public void answer_select() {
+		// DRAW INVENTORY
+		drawInventory();
+
+		// DRAW QUESTION WINDOW
+		int x = gp.tileSize * 2;
+		int y = gp.tileSize * 3;
+		int width = gp.tileSize * 6;
+		int height = gp.tileSize*2;
+		drawSubWindow(x,y,width,height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		
+		currentDialogue = "Q1: What is 1 + 2?";
+			g2.drawString(currentDialogue, x, y);
+
+		// DRAW ANSWER WINDOW
+		x = gp.tileSize * 2;
+		y = gp.tileSize * 5;
+		width = gp.tileSize * 6;
+		height = gp.tileSize*2;
+		drawSubWindow(x,y,width,height);
+		g2.drawString("Your answer: ", x+24, y+60);
+		if (!gp.player.currentNumber.isEmpty()) {
+			StringBuilder values = new StringBuilder();
+			for (SuperObject item : gp.player.currentNumber) {
+				values.append(item.value);
+			}
+			g2.drawString("Your answer: " + values.toString(), x+24, y+60);
+			// g2.drawString("Your answer: " + valueAsString, x+24, y+60);
+			}
+
+	}
 	
 	public void resetUIVariables() {
 	    gameFinished = false;
@@ -299,6 +384,7 @@ public class UI {
 	    playTime = 0.0;
 	}
 	
+
 	public int getItemIndexOnSlot(){
 		int itemIndex = slotCol + (slotRow * 5);
 		return itemIndex;

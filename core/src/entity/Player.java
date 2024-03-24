@@ -27,7 +27,7 @@ public class Player extends Entity{
 	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
 	public final int maxInventorySize = 20;
 	public List<SuperObject> currentNumber = new ArrayList<>();
-	public int answer;
+	public String answer = "";
 
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		super(gp);
@@ -53,7 +53,7 @@ public class Player extends Entity{
 		
 		worldX = gp.tileSize * 23;
 		worldY = gp.tileSize * 21;
-		speed= 4;
+		speed= 10;
 		direction = "down";
 	}
 
@@ -260,7 +260,9 @@ public class Player extends Entity{
 		int itemIndex = gp.ui.getItemIndexOnSlot();
 		if (itemIndex < inventory.size()) {
 			SuperObject selectedItem = inventory.get(itemIndex);
-			if (selectedItem.type == selectedItem.getTypeNumber()) {
+			if (currentNumber.contains(selectedItem)) {
+				currentNumber.remove(selectedItem);
+			} else {
 				currentNumber.add(selectedItem);
 				answer += selectedItem.value;
 			}

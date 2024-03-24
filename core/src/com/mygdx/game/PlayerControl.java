@@ -12,7 +12,7 @@ public class PlayerControl implements KeyListener{
 	LeaderboardPanel lp;
 	LevelPanel glp;
 	UI ui;
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, escapePressed;
 	
 	public PlayerControl(GamePanel gp) {
 		this.gp = gp;
@@ -63,7 +63,9 @@ public class PlayerControl implements KeyListener{
 			gameOverState(code);
 			
 		}
-	
+		else if(gp.gameState == gp.qnaState) {
+			qnaState(code);
+		}
 	}
 
 	public void titleState(int code) {
@@ -179,7 +181,10 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.playState;
 		}
+		playerInventory(code);
+	}
 
+	public void playerInventory(int code) {
 		if(code == KeyEvent.VK_W) {
 			if(gp.ui.slotRow != 0){
 			gp.ui.slotRow--;
@@ -236,6 +241,34 @@ public class PlayerControl implements KeyListener{
 	    }
 	}
 
+	public void qnaState(int code) {
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+		}
+		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_W) {
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = 2;
+				}
+				gp.playSE(9);
+			}
+			if (code == KeyEvent.VK_S) {
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > 2) {
+					gp.ui.commandNum = 0;
+				}
+				gp.playSE(9);
+			}
+		}
+		if (gp.ui.subState == 1) {
+			playerInventory(code);
+			if (code == KeyEvent.VK_ESCAPE) {
+				gp.ui.subState = 0;
+			}
+		}
+	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		
@@ -254,6 +287,12 @@ public class PlayerControl implements KeyListener{
 		
 		if(code == KeyEvent.VK_D) {
 			rightPressed = false;
+		}
+		if(code == KeyEvent.VK_ESCAPE) {
+			escapePressed = false;
+		}
+		if(code == KeyEvent.VK_ENTER) {
+			enterPressed = false;
 		}
 		
 	}
