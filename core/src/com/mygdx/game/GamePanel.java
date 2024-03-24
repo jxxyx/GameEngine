@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 	
 	// World Settings
-	public final int maxWorldCol = 60;
+	public final int maxWorldCol = 70;
 	public final int maxWorldRow = 50;
 	public final int worldWidth = tileSize * maxWorldCol; // 800 pixels
 	public final int worldHeight = tileSize * maxWorldRow; // 800 pixels
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable{
 	int screenHeight2 = screenHeight;
 	BufferedImage tempScreen;
 	Graphics2D g2;
+	public boolean fullScreenOn = false;
 
 	// FPS
 	int FPS = 60;
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public SuperObject obj[] = new SuperObject[20];
 	public Entity npc[] = new Entity[10];
 	
+	// Game state
 	public int gameState;
 	public final int titleState = 0;
 	public final int playState = 1;
@@ -77,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int gameOverState = 7;
 	public final int qnaState = 8;
 	public int gameDifficulty = 0;
+	public final int optionsState = 8;
 
 
 	public GamePanel() {
@@ -101,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable{
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) tempScreen.getGraphics();
 
-		// setFullScreen();
+		setFullScreen();
 	}
 	
 	public void resetGame() {
@@ -132,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	}
 
-	/*
+	
 	public void setFullScreen() {
 		// Get local screen size
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -143,7 +146,7 @@ public class GamePanel extends JPanel implements Runnable{
 		screenWidth2 = GameEngine.window.getWidth();
 		screenHeight2 = GameEngine.window.getHeight();
 	}
-	*/
+	
 
 	public void startGameThread() {
 		
