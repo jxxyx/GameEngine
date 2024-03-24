@@ -35,14 +35,14 @@ public class NPC_Merchant extends Entity{
 		}
 	}
 	public void setDialogue(){
-		dialogues[0] = "Hello adventurer";
-		dialogues[1] = "There are multiple math \nquestions";
-		dialogues[2] = "Solve them to obtain keys \nwhich can unlock doors!";
-		dialogues[3] = "Goodluck!";
+		dialogues[0][0] = "Hello adventurer";
+		dialogues[1][0] = "There are multiple math \nquestions";
+		dialogues[2][0] = "Solve them to obtain keys \nwhich can unlock doors!";
+		dialogues[3][0] = "Goodluck!";
 	}
 	public void speak() {
 		super.speak();
-		gp.ui.currentDialogue = dialogues[dialogueIndex];
+		gp.ui.currentDialogue = dialogues[dialogueIndex][0];
 		gp.gameState = gp.qnaState;
 		gp.ui.npc = this;
 		dialogueIndex++;

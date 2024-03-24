@@ -38,10 +38,10 @@ public class NPC_OldMan extends Entity implements AI_controller{
 		}
 	}
 	public void setDialogue(){
-		dialogues[0] = "Hello adventurer";
-		dialogues[1] = "There are multiple math \nquestions";
-		dialogues[2] = "Solve them to obtain keys \nwhich can unlock doors!";
-		dialogues[3] = "Goodluck!";
+		dialogues[0][0] = "Hello adventurer";
+		dialogues[1][0] = "There are multiple math \nquestions";
+		dialogues[2][0] = "Solve them to obtain keys \nwhich can unlock doors!";
+		dialogues[3][0] = "Goodluck!";
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class NPC_OldMan extends Entity implements AI_controller{
 	}
 	public void speak() {
 		if(dialogueIndex < dialogues.length) {
-			gp.ui.currentDialogue = dialogues[dialogueIndex];
+			gp.ui.currentDialogue = dialogues[dialogueIndex][0];
 			gp.gameState = gp.dialogueState; // Keep the dialogue state active
 			dialogueIndex++;
 		}

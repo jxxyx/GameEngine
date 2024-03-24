@@ -80,5 +80,10 @@ public class AssetSetter {
         gp.npc[2] = new NPC_Merchant(gp);
         gp.npc[2].worldX = 18 * gp.tileSize;
         gp.npc[2].worldY = 22 * gp.tileSize;
+
+        gp.npc[3] = new NPC_Merchant(gp);
+        gp.npc[3].worldX = 22 * gp.tileSize;
+        gp.npc[3].worldY = 22 * gp.tileSize;
+
     }
 }

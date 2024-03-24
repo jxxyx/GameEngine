@@ -130,7 +130,6 @@ public class UI {
 		if (gp.gameState == gp.qnaState) {
 			drawQnaScreen();
 		}
-		
 	}
 	
 	public void drawPauseScreen() {
@@ -312,14 +311,14 @@ public class UI {
 	public void qna_screen() {
 		drawDialogueScreen();
 
-		// DRAW WINDOW
+		// DRAW SUB WINDOW
 		int x = gp.tileSize * 15;
 		int y = gp.tileSize * 4;
 		int width = gp.tileSize * 3;
 		int height = (int)(gp.tileSize * 3.5);
 		drawSubWindow(x,y,width,height);
 
-		// DRAW TEXTS
+		// DRAW SUB TEXTS
 		x += gp.tileSize;
 		y += gp.tileSize;
 		g2.drawString("Answer", x, y);
@@ -345,10 +344,28 @@ public class UI {
 		
 	}
 	public void answer_select() {
+		
 		// DRAW INVENTORY
 		drawInventory();
 
 		// DRAW QUESTION WINDOW
+
+			// DRAW QUESTIONS
+		if(gp.gameDifficulty == 0) {
+			gp.player.setDialogueEasy();
+		} 
+		else if(gp.gameDifficulty == 1) {
+			gp.player.setDialogueMedium();
+		}
+		else if(gp.gameDifficulty == 2) {
+			gp.player.setDialogueHard();
+		}
+
+		// if (gp.player.dialogueIndex < gp.player.dialogues.length) {
+		// 	currentDialogue = gp.player.dialogues[gp.player.dialogueIndex];
+		// 	gp.player.dialogueIndex++;	
+		// }
+		
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize * 3;
 		int width = gp.tileSize * 6;
@@ -356,11 +373,15 @@ public class UI {
 		drawSubWindow(x,y,width,height);
 		x += gp.tileSize;
 		y += gp.tileSize;
-		
-		currentDialogue = "Q1: What is 1 + 2?";
-			g2.drawString(currentDialogue, x, y);
+
+		if (gp.player.dialogues != null && gp.player.dialogues[gp.player.dialogueIndex] != null) {
+			g2.drawString(gp.player.dialogues[gp.player.dialogueIndex][0], x, y);
+		}
 
 		// DRAW ANSWER WINDOW
+		
+		String stringvalue = "";
+
 		x = gp.tileSize * 2;
 		y = gp.tileSize * 5;
 		width = gp.tileSize * 6;
@@ -372,9 +393,20 @@ public class UI {
 			for (SuperObject item : gp.player.currentNumber) {
 				values.append(item.value);
 			}
-			g2.drawString("Your answer: " + values.toString(), x+24, y+60);
-			// g2.drawString("Your answer: " + valueAsString, x+24, y+60);
+			if (g2 != null && values != null) {
+				stringvalue = values.toString();
+				g2.drawString("Your answer: " + stringvalue, x+24, y+60);
 			}
+			System.out.println("stringvalue: " + stringvalue);
+			System.out.println("dialogue: " + gp.player.dialogues[gp.player.dialogueIndex][1]);
+			if (Integer.parseInt(stringvalue) == Integer.parseInt(gp.player.dialogues[gp.player.dialogueIndex][1])) {
+				gp.player.currentNumber.clear();
+				gp.player.dialogueIndex++;
+				gp.npc[gp.player.npcIndex] = null;
+				gp.gameState = gp.playState;
+				showMessage("Well done!");
+			}
+		}
 
 	}
 	
