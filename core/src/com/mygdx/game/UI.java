@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;	
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.awt.Image;
 
 import entity.Entity;
@@ -23,6 +24,7 @@ public class UI {
 
 	GamePanel gp;
 	Graphics2D g2;
+	SuperObject superObject = new SuperObject();
 	Font arial_40, arial_80B;
 	BufferedImage keyImage;
 	public boolean messageOn = false;
@@ -33,7 +35,7 @@ public class UI {
 	public int commandNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
-		private boolean hasWrittenPlaytimeToFile = false;
+	private boolean hasWrittenPlaytimeToFile = false;
 	public int subState = 0;
 
 	double playTime;
@@ -102,7 +104,7 @@ public class UI {
 		//character state
 		if(gp.gameState == gp.characterState) {
 			//drawCharacterScreen();
-			drawInventory();
+			drawInventory(gp.player.inventory);
 		}
 
 		// DIALOGUE STATE
@@ -218,7 +220,7 @@ public class UI {
 		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
 	}
 
-	public void drawInventory() {
+	public void drawInventory(ArrayList<SuperObject> inventory) {
 
 		//frame
 		final int frameX = gp.tileSize*12;
@@ -237,17 +239,15 @@ public class UI {
 		int imageHeight = slotSize; // specify the height of the image
 
 		//DRAW PLAYERS ITEMS IN INVENTORY
-		for(int i = 0; i < gp.player.inventory.size(); i++) {
-
-			// equip cursor
+		for(int i = 0; i < inventory.size(); i++) {
 			
-			if (gp.player.currentNumber.contains(gp.player.inventory.get(i))) {
+			// equip cursor
+			if (gp.player.currentNumber.contains(inventory.get(i))) {
 				g2.setColor(new Color(240,190,90));
 				g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
 			}
-			
-
-			Image scaledImage = gp.player.inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+		
+			Image scaledImage = inventory.get(i).image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
 			g2.drawImage(scaledImage, slotX, slotY, null);
 
 			slotX += slotSize;
@@ -283,8 +283,8 @@ public class UI {
 		int itemIndex = getItemIndexOnSlot();
 		int maxWidth = 200; // Maximum width of a line
 		
-		if(itemIndex < gp.player.inventory.size()) {
-			String description = gp.player.inventory.get(itemIndex).description;
+		if(itemIndex < inventory.size()) {
+			String description = inventory.get(itemIndex).description;
 			String[] words = description.split(" ");
 			String currentLine = words[0];
 		
@@ -346,7 +346,8 @@ public class UI {
 	public void answer_select() {
 		
 		// DRAW INVENTORY
-		drawInventory();
+		gp.player.filterInventory(superObject.type_number);
+		drawInventory(gp.player.numberInventory);
 
 		// DRAW QUESTION WINDOW
 

@@ -21,10 +21,28 @@ public class SuperObject {
 
     //Type
     public int type;
-    public final int type_number = 0;
+    public final int type_all = 0;
+    public final int type_number = 1;
+    public final int type_object = 2;
 
+    // Getter for type
+    public int getType() {
+        return type;
+    }
+
+    // Getter for type_all
+    public int getTypeAll() {
+        return type_all;
+    }
+
+    // Getter for type_number
     public int getTypeNumber() {
         return type_number;
+    }
+
+    // Getter for type_object
+    public int getTypeObject() {
+        return type_object;
     }
 
 

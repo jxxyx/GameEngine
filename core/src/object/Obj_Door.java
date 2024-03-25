@@ -9,6 +9,7 @@ public class Obj_Door extends SuperObject{
     public Obj_Door(){
 
         name = "Door";
+        type = type_object;
         try{
             image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
 

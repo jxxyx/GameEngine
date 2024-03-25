@@ -25,6 +25,7 @@ public class Player extends Entity{
 	public int hasKey = 0;
 	private Scanner scanner;
 	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
+	public ArrayList<SuperObject> numberInventory = new ArrayList<SuperObject>();
 	public final int maxInventorySize = 20;
 	public List<SuperObject> currentNumber = new ArrayList<>();
 	public int npcIndex;
@@ -261,7 +262,7 @@ public class Player extends Entity{
         dialogueIndex = 0;
     }
 
-	public void selectItem() {
+	public void selectItem(ArrayList<SuperObject> inventory) {
 		int itemIndex = gp.ui.getItemIndexOnSlot();
 		if (itemIndex < inventory.size()) {
 			selectedItem = inventory.get(itemIndex);
@@ -280,6 +281,16 @@ public class Player extends Entity{
             selectedItem = null;
         }
     }
+
+	public void filterInventory(int type_number) {
+		numberInventory.clear();
+		for (SuperObject item : inventory) {
+			if (item.type == type_number) {
+				numberInventory.add(item);
+			}
+		}
+	}
+
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);

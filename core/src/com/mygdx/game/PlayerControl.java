@@ -183,6 +183,9 @@ public class PlayerControl implements KeyListener{
 		if(code == KeyEvent.VK_C) {
 			gp.gameState = gp.playState;
 		}
+		if (code == KeyEvent.VK_ENTER) {
+			gp.player.selectItem(gp.player.inventory);
+		}
 		playerInventory(code);
 	}
 
@@ -210,9 +213,6 @@ public class PlayerControl implements KeyListener{
 			gp.ui.slotCol++;
 			gp.playSE(5);
 			}
-		}
-		if (code == KeyEvent.VK_ENTER) {
-			gp.player.selectItem();
 		}
 	}
 	
@@ -244,10 +244,11 @@ public class PlayerControl implements KeyListener{
 	}
 
 	public void qnaState(int code) {
-		if (code == KeyEvent.VK_ENTER) {
-			enterPressed = true;
-		}
+
 		if (gp.ui.subState == 0) {
+			if (code == KeyEvent.VK_ENTER) {
+				enterPressed = true;
+			}
 			if (code == KeyEvent.VK_W) {
 				gp.ui.commandNum--;
 				if (gp.ui.commandNum < 0) {
@@ -264,14 +265,15 @@ public class PlayerControl implements KeyListener{
 			}
 		}
 		if (gp.ui.subState == 1) {
-			playerInventory(code);
+			if (code == KeyEvent.VK_ENTER) {
+				gp.player.selectItem(gp.player.numberInventory);
+			}
 			if (code == KeyEvent.VK_ESCAPE) {
 				gp.ui.subState = 0;
 			}
+			playerInventory(code);
 			}
 	    }		
-	    
-	
 
 	public void optionsState(int code) {
 		if(code == KeyEvent.VK_ESCAPE) {
