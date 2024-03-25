@@ -6,8 +6,12 @@ import object.Obj_Door;
 import object.Obj_key;
 import entity.NPC_Merchant;
 import entity.NPC_OldMan;
+import object.Obj_16;
+import object.Obj_27;
 import object.Obj_3;
+import object.Obj_420;
 import object.Obj_5;
+import object.Obj_56;
 import object.Obj_8;
 import object.Obj_Boots;
 
@@ -23,16 +27,16 @@ public class AssetSetter {
     // Method
     public void setObject(){
 
-        gp.obj[0] = new Obj_key();
+        gp.obj[0] = new Obj_420();
         gp.obj[0].worldX = 33 * gp.tileSize;
         gp.obj[0].worldY = 7 * gp.tileSize;
         
 
-        gp.obj[1] = new Obj_key();
+        gp.obj[1] = new Obj_56();
         gp.obj[1].worldX = 33 * gp.tileSize;
         gp.obj[1].worldY = 40 * gp.tileSize;
 
-        gp.obj[2] = new Obj_key();
+        gp.obj[2] = new Obj_27();
         gp.obj[2].worldX = 48 * gp.tileSize;
         gp.obj[2].worldY = 8 * gp.tileSize;
 
@@ -67,6 +71,10 @@ public class AssetSetter {
         gp.obj[10] = new Obj_8();
         gp.obj[10].worldX = 58 * gp.tileSize;
         gp.obj[10].worldY = 43 * gp.tileSize;
+
+        gp.obj[11] = new Obj_420();
+        gp.obj[11].worldX = 65 * gp.tileSize;
+        gp.obj[11].worldY = 37 * gp.tileSize;
     }
     public void setNPC() {
     	gp.npc[0] = new NPC_OldMan(gp);
