@@ -360,11 +360,6 @@ public class UI {
 		else if(gp.gameDifficulty == 2) {
 			gp.player.setDialogueHard();
 		}
-
-		// if (gp.player.dialogueIndex < gp.player.dialogues.length) {
-		// 	currentDialogue = gp.player.dialogues[gp.player.dialogueIndex];
-		// 	gp.player.dialogueIndex++;	
-		// }
 		
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize * 3;
@@ -402,7 +397,8 @@ public class UI {
 			if (Integer.parseInt(stringvalue) == Integer.parseInt(gp.player.dialogues[gp.player.dialogueIndex][1])) {
 				gp.player.currentNumber.clear();
 				gp.player.dialogueIndex++;
-				gp.npc[gp.player.npcIndex] = null;
+				gp.npc[gp.player.npcIndex] = null;		
+				gp.player.removeSelectedItem(); 
 				gp.gameState = gp.playState;
 				showMessage("Well done!");
 			}

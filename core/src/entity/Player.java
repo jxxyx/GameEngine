@@ -27,8 +27,9 @@ public class Player extends Entity{
 	public ArrayList<SuperObject> inventory = new ArrayList<SuperObject>();
 	public final int maxInventorySize = 20;
 	public List<SuperObject> currentNumber = new ArrayList<>();
-	public String answer = "";
 	public int npcIndex;
+	public int objIndex;
+	SuperObject selectedItem;
 
 	public Player(GamePanel gp, PlayerControl playerControl) {
 		super(gp);
@@ -101,7 +102,7 @@ public class Player extends Entity{
 			gp.cChecker.checkTile(this);
 			
 			// CHECK OBJECT COLLISION
-			int objIndex = gp.cChecker.checkObject(this,  true);
+			objIndex = gp.cChecker.checkObject(this,  true);
 			pickUpObject(objIndex);
 			
 			// CHECK NPC COLLISION
@@ -263,15 +264,22 @@ public class Player extends Entity{
 	public void selectItem() {
 		int itemIndex = gp.ui.getItemIndexOnSlot();
 		if (itemIndex < inventory.size()) {
-			SuperObject selectedItem = inventory.get(itemIndex);
+			selectedItem = inventory.get(itemIndex);
 			if (currentNumber.contains(selectedItem)) {
 				currentNumber.remove(selectedItem);
 			} else {
 				currentNumber.add(selectedItem);
-				answer += selectedItem.value;
 			}
 		}
 	}
+
+	public void removeSelectedItem() {
+        if (selectedItem != null) {
+            inventory.remove(selectedItem);
+            currentNumber.remove(selectedItem);
+            selectedItem = null;
+        }
+    }
 	
 	public void draw(Graphics2D g2) {
 //		g2.setColor(Color.white);
