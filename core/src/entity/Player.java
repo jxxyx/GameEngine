@@ -229,21 +229,24 @@ public class Player extends Entity{
 		
 		dialogues[2][0] = "Q3: What is 3 + 5";
 		dialogues[2][1] = "8";
+		
+		
 	}
 	
 	public void setDialogueMedium(){
 		dialogues[0][0] = "Q1:What is 8 x 7";
 		dialogues[0][1] = "56";
-
+		
 		dialogues[1][0] = "Q2:What is 9 x 3";
 		dialogues[1][1] = "27";
 
 		dialogues[2][0] = "Q3:What is 25 ÷ 5";
 		dialogues[2][1] = "5";
+		
 	}
 	
 	public void setDialogueHard(){
-		dialogues[0][0] = "Q1:What is 2 raised to the power of 4";
+		dialogues[0][0] = "Q1:What is 2 raised to \nthe power of 4";
 		dialogues[0][1] = "16";
 
 		dialogues[1][0] = "Q2:What is the squareroot of 64";

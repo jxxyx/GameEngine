@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import com.mygdx.game.GamePanel;
-import com.mygdx.game.SceneManager;
+import Scene.Scene;
 
 import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager extends SceneManager{
+public class TileManager extends Scene{
 	
 	public Tile[] tile;
 	public int MapTileNum[][];

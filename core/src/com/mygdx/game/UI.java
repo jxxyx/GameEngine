@@ -363,15 +363,23 @@ public class UI {
 		}
 		
 		int x = gp.tileSize * 2;
-		int y = gp.tileSize * 3;
+		int y = gp.tileSize * 2;
 		int width = gp.tileSize * 6;
-		int height = gp.tileSize*2;
+		int height = gp.tileSize*3;
 		drawSubWindow(x,y,width,height);
 		x += gp.tileSize;
 		y += gp.tileSize;
 
 		if (gp.player.dialogues != null && gp.player.dialogues[gp.player.dialogueIndex] != null) {
-			g2.drawString(gp.player.dialogues[gp.player.dialogueIndex][0], x, y);
+		    String currentDialogue = gp.player.dialogues[gp.player.dialogueIndex][gp.player.dialogueIndex];
+		    if (currentDialogue.contains("\n")) {
+		        for (String line : currentDialogue.split("\n")) {
+		            g2.drawString(line, x, y);
+		            y += 40;
+		        }
+		    } else {
+		        g2.drawString(currentDialogue, x, y);
+		    }
 		}
 
 		// DRAW ANSWER WINDOW

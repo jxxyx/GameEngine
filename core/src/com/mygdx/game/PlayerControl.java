@@ -254,16 +254,16 @@ public class PlayerControl implements KeyListener{
 			if (code == KeyEvent.VK_W) {
 				gp.ui.commandNum--;
 				if (gp.ui.commandNum < 0) {
-					gp.ui.commandNum = 2;
+					gp.ui.commandNum = 1;
 				}
-				gp.playSE(9);
+				gp.playSE(5);
 			}
 			if (code == KeyEvent.VK_S) {
 				gp.ui.commandNum++;
-				if (gp.ui.commandNum > 2) {
+				if (gp.ui.commandNum > 1) {
 					gp.ui.commandNum = 0;
 				}
-				gp.playSE(9);
+				gp.playSE(5);
 			}
 		}
 		if (gp.ui.subState == 1) {

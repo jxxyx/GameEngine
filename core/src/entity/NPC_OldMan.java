@@ -72,5 +72,8 @@ public class NPC_OldMan extends Entity implements AI_controller{
 			gp.gameState = gp.dialogueState; // Keep the dialogue state active
 			dialogueIndex++;
 		}
+		else if(dialogueIndex > dialogues.length) {
+			dialogueIndex = 0;
+		}
 	}
 }
