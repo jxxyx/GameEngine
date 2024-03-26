@@ -202,6 +202,10 @@ public class Player extends Entity{
 		case "Answer 3":
 		case "Answer 5":
 		case "Answer 8":
+		case "Answer 16":
+		case "Answer 27":
+		case "Answer 56":
+		case "Answer 420":
 			// CHECK IF INVENTORY IS FULL
 			if (inventory.size() != maxInventorySize) {
 				inventory.add(gp.obj[i]);
