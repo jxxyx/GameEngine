@@ -1,4 +1,4 @@
-package leaderboard;
+package Scene;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,11 +11,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.mygdx.game.GamePanel;
-import com.mygdx.game.SceneManager;
 
-public class LeaderboardPanel extends SceneManager {
+public class LeaderboardPanel extends Scene {
 	
-	Graphics2D g2;
     Font arial_40, arial_80B;
     public int commandNum = 0;
     String playTime; 
@@ -24,7 +22,6 @@ public class LeaderboardPanel extends SceneManager {
     
     public LeaderboardPanel(GamePanel gp) {
     	super(gp);
-        this.gp = gp;
         
 		arial_40 = new Font("Arial", Font.PLAIN, 40);
 		arial_80B = new Font("Arial", Font.BOLD, 80);
@@ -85,12 +82,6 @@ public class LeaderboardPanel extends SceneManager {
 		y += gp.tileSize *3.5;
 		g2.drawString(text, x, y);
 		g2.drawString(">", x-gp.tileSize, y);
-	}
-	
-	public int getXforCenteredText(String text) {
-		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();	
-		int x = gp.screenWidth/2 - length/2;
-		return x;
 	}
 	
 	private List<String> readPlaytimefromFile() {

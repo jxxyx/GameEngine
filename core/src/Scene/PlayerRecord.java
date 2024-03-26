@@ -1,4 +1,4 @@
-package leaderboard;
+package Scene;
 
 public class PlayerRecord {
     private String playerName;

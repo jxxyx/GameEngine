@@ -3,7 +3,9 @@ package com.mygdx.game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import leaderboard.LeaderboardPanel;
+import Scene.LeaderboardPanel;
+import Scene.LevelPanel;
+import Scene.MenuPanel;
 
 public class PlayerControl implements KeyListener{
 	

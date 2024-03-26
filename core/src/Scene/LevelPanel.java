@@ -1,28 +1,22 @@
-package com.mygdx.game;
+package Scene;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class LevelPanel extends SceneManager {
+import com.mygdx.game.GamePanel;
+
+public class LevelPanel extends Scene {
 	
-	Graphics2D g2;
     Font arial_40, arial_80B;
     public int commandNum = 0;
-
-    private List<String> playerRecords;
     
     public LevelPanel(GamePanel gp) {
     	super(gp);
-        this.gp = gp;
         
 		arial_40 = new Font("Arial", Font.PLAIN, 40);
 		arial_80B = new Font("Arial", Font.BOLD, 80);
     }
-
 
 	@Override
 	public void draw(Graphics2D g2) {
@@ -58,7 +52,8 @@ public class LevelPanel extends SceneManager {
 
 	    // MENU
 	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-
+	    
+	    //Easy Text
 		String text = "EASY";
 		x = getXforCenteredText(text);
 		y += gp.tileSize *3.5;
@@ -67,7 +62,7 @@ public class LevelPanel extends SceneManager {
 			g2.drawString(">", x-gp.tileSize, y);
 		}
 
-		
+		//Medium Text
 		text = "MEDIUM";
 		x = getXforCenteredText(text);
 		y += gp.tileSize;
@@ -76,7 +71,7 @@ public class LevelPanel extends SceneManager {
 			g2.drawString(">", x-gp.tileSize, y);
 		}
 
-		
+		//Hard Text
 		text = "HARD";
 		x = getXforCenteredText(text);
 		y += gp.tileSize;
@@ -85,6 +80,7 @@ public class LevelPanel extends SceneManager {
 			g2.drawString(">", x-gp.tileSize, y);
 		}
 		
+		//Back Text
 		text = "BACK";
 		x = getXforCenteredText(text);
 		y += gp.tileSize * 2;
@@ -94,13 +90,4 @@ public class LevelPanel extends SceneManager {
 		}
 
 	}
-	
-	public int getXforCenteredText(String text) {
-		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();	
-		int x = gp.screenWidth/2 - length/2;
-		return x;
-	}
-	
-	
-	
 }

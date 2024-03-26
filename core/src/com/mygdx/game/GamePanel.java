@@ -10,9 +10,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import Scene.LeaderboardPanel;
+import Scene.LevelPanel;
+import Scene.MenuPanel;
 import entity.Entity;
 import entity.Player;
-import leaderboard.LeaderboardPanel;
 import object.SuperObject;
 import tile.TileManager;
 
