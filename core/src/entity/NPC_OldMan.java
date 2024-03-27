@@ -66,18 +66,14 @@ public class NPC_OldMan extends Entity implements AI_controller{
 			actionLockCounter = 0;
 		}
 	}
-	
 	public void speak() {
-	    if (dialogueIndex < 4) {
-	        gp.ui.currentDialogue = dialogues[dialogueIndex][0];
-	        gp.gameState = gp.dialogueState; // Keep the dialogue state active
-	        dialogueIndex++;
-	    } else {
-	        dialogueIndex = 0; 
-	        gp.ui.currentDialogue = dialogues[dialogueIndex][0]; 
-	        gp.gameState = gp.dialogueState; 
-	        dialogueIndex++;
-	    }
+		if(dialogueIndex < dialogues.length) {
+			gp.ui.currentDialogue = dialogues[dialogueIndex][0];
+			gp.gameState = gp.dialogueState; // Keep the dialogue state active
+			dialogueIndex++;
+		}
+		else if(dialogueIndex > dialogues.length) {
+			dialogueIndex = 0;
+		}
 	}
-
 }

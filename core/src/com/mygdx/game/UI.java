@@ -193,11 +193,10 @@ public class UI {
 		x += gp.tileSize;
 		y += gp.tileSize;
 
-		if (currentDialogue != null ) {
-			for(String line: currentDialogue.split("\n")){
-				g2.drawString(line, x, y);
-				y += 40;
-			}
+		
+		for(String line: currentDialogue.split("\n")){
+			g2.drawString(line, x, y);
+			y += 40;
 		}
 
 	}
