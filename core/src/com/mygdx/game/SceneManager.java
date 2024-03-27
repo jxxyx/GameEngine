@@ -1,25 +1,55 @@
 package com.mygdx.game;
 
 import java.awt.Graphics2D;
+
+import javax.swing.JPanel;
+
+import Scene.LeaderboardPanel;
+import Scene.LevelPanel;
+import Scene.MenuPanel;
 import Scene.Scene;
 
-public class SceneManager {
-	Graphics2D g2;
-    GamePanel gp;
-    Scene currentScene;
+public class SceneManager extends JPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    private GamePanel gp;
+    private Scene currentScene;
+    public MenuPanel menuPanel;
+    public LevelPanel levelPanel;
+    public LeaderboardPanel leaderboardPanel;
+    public PlayerControl playerControl;
 
-    public SceneManager(GamePanel gp) {
+    public SceneManager(GamePanel gp, PlayerControl playerControl) {
         this.gp = gp;
-        // Initialize your scenes here, e.g., currentScene = new MenuScene(gp);
-        // Set initial scene based on game state
-        // Example: setSceneBasedOnGameState(gp.gameState);
+        this.playerControl = playerControl;
+        menuPanel = new MenuPanel(gp);
+        levelPanel = new LevelPanel(gp);
+        leaderboardPanel = new LeaderboardPanel(gp);
+        currentScene = menuPanel; // Set the initial scene to the menu scene
+        this.addKeyListener(playerControl);
     }
-
-    public void setScene(Scene scene) {
-        this.currentScene = scene;
+    
+    public Scene getScene() {
+    	return currentScene;
     }
 
     public void draw(Graphics2D g2) {
         currentScene.draw(g2);
     }
+    
+
+    public void setMenuScene() {
+        currentScene = menuPanel;
+    }
+
+    public void setLevelScene() {
+        currentScene = levelPanel;
+    }
+
+    public void setLeaderboardScene() {
+        currentScene = leaderboardPanel;
+    }
 }
+

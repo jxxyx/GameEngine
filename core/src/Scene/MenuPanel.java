@@ -9,7 +9,6 @@ import com.mygdx.game.GamePanel;
 public class MenuPanel extends Scene {
 
     Font arial_40, arial_80B;
-    public int commandNum = 0;
 
     public MenuPanel(GamePanel gp) {
         super(gp);

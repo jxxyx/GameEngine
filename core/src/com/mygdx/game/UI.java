@@ -194,9 +194,11 @@ public class UI {
 		y += gp.tileSize;
 
 		
-		for(String line: currentDialogue.split("\n")){
-			g2.drawString(line, x, y);
-			y += 40;
+		if (currentDialogue != null ) {
+			for(String line: currentDialogue.split("\n")){
+				g2.drawString(line, x, y);
+				y += 40;
+			}
 		}
 
 	}
@@ -371,7 +373,7 @@ public class UI {
 		y += gp.tileSize;
 
 		if (gp.player.dialogues != null && gp.player.dialogues[gp.player.dialogueIndex] != null) {
-		    String currentDialogue = gp.player.dialogues[gp.player.dialogueIndex][gp.player.dialogueIndex];
+		    String currentDialogue = gp.player.dialogues[gp.player.dialogueIndex][0];
 		    if (currentDialogue.contains("\n")) {
 		        for (String line : currentDialogue.split("\n")) {
 		            g2.drawString(line, x, y);

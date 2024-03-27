@@ -15,7 +15,6 @@ import com.mygdx.game.GamePanel;
 public class LeaderboardPanel extends Scene {
 	
     Font arial_40, arial_80B;
-    public int commandNum = 0;
     String playTime; 
 
     private List<String> playerRecords;

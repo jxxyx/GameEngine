@@ -9,7 +9,6 @@ import com.mygdx.game.GamePanel;
 public class LevelPanel extends Scene {
 	
     Font arial_40, arial_80B;
-    public int commandNum = 0;
     
     public LevelPanel(GamePanel gp) {
     	super(gp);
