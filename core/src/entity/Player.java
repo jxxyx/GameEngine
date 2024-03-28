@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -56,7 +55,7 @@ public class Player extends Entity{
 		
 		worldX = gp.tileSize * 33;
 		worldY = gp.tileSize * 21;
-		speed= 10;
+		speed= 5;
 		direction = "down";
 	}
 

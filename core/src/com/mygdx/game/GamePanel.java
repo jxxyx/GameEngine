@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 	customSound SE = new customSound();
 	public CollisionManager cChecker = new CollisionManager(this);
 	public AssetSetter aSetter = new AssetSetter(this);
+	public EntityManager entityManager = new EntityManager();
 	public UI ui = new UI(this);
 	public MenuPanel mp = new MenuPanel(this);
 	public LeaderboardPanel lp = new LeaderboardPanel(this);
@@ -102,6 +103,15 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 		//playMusic(0);
 		gameState = titleState;
+		
+		   // Add player to entity manager
+	    entityManager.addEntity(player);
+	    
+        for (Entity npcEntity : npc) {
+            if (npcEntity != null) {
+                entityManager.addEntity(npcEntity);
+            }
+        }
 
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) tempScreen.getGraphics();
@@ -116,22 +126,18 @@ public class GamePanel extends JPanel implements Runnable{
 	    }
 
 	    // Reset player variables and state
-	    player.setDefaultValues();
-	    player.resetDialogueIndex();
+	    entityManager.resetAll();
 		aSetter.setObject();
 		aSetter.setNPC();
-	    player.inventory.clear();
-	    player.hasKey = 0;
+
 	    
 		ui.resetUIVariables();
 	}
 	
 	public void quitToMainMenu() {
-	    player.setDefaultValues();
-	    player.resetDialogueIndex();
+		entityManager.clearAll();
 		aSetter.setObject();
 		aSetter.setNPC();
-	    player.inventory.clear();
 		
 		ui.resetUIVariables();
 
@@ -192,14 +198,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		if(gameState == playState) {
 			// PLAYER
-			player.update();
-			// NPC
-			for (int i = 0; i < npc.length; i++) {
-				if (npc[i] != null) {
-					npc[i].update();
-				}
-			}
-		}
+			entityManager.updateAll();		
+}
 		
 		if(gameState == pauseState) {
 			//nothing
@@ -229,15 +229,8 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 			
-			// NPC
-			for(int i = 0; i < npc.length; i++) {
-				if (npc[i] != null) {
-					npc[i].draw(g2);
-				}
-			}
-
-			// Player
-			player.draw(g2);
+			// Player and NPC
+			entityManager.drawAll(g2);
 			
 			// UI
 			ui.draw(g2);
