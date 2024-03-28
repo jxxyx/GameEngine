@@ -128,21 +128,11 @@ public class GamePanel extends JPanel implements Runnable{
 
 	    // Reset player variables and state
 	    entityManager.resetAll();
-	    
-//	    player.setDefaultValues();
-//	    player.resetDialogueIndex();
-//	    player.inventory.clear();
-//		aSetter.setObject();
-//		aSetter.setNPC();
-
-	    
 		ui.resetUIVariables();
 	}
 	
 	public void quitToMainMenu() {
 		entityManager.clearAll();
-//		aSetter.setObject();
-//		aSetter.setNPC();
 		
 		ui.resetUIVariables();
 
@@ -204,13 +194,6 @@ public class GamePanel extends JPanel implements Runnable{
 		if(gameState == playState) {
 			// PLAYER
 			entityManager.updateAll();		
-//			player.update();
-//			// NPC
-//			for (int i = 0; i < npc.length; i++) {
-//				if (npc[i] != null) {
-//					npc[i].update();
-//				}
-//			}
 }
 		
 		if(gameState == pauseState) {
@@ -246,17 +229,6 @@ public class GamePanel extends JPanel implements Runnable{
 					obj[i].draw(g2, this);
 				}
 			}
-			
-//			// NPC
-//			for(int i = 0; i < npc.length; i++) {
-//				if (npc[i] != null) {
-//					npc[i].draw(g2);
-//				}
-//			}
-//
-//			// Player
-//			player.draw(g2);
-			// Player and NPC
 			
 			entityManager.drawAll(g2);
 			

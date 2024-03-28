@@ -19,3 +19,5 @@ Playtime: 41.93 seconds
 Playtime: 55.93 seconds
 Playtime: 44.48 seconds
 Playtime: 42.23 seconds
+Playtime: 48.53 seconds
+Playtime: 82.73 seconds

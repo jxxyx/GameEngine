@@ -155,17 +155,6 @@ public class UI {
 		if(gp.gameState == gp.optionsState) {
 			drawOptionsScreen();
 		}
-		// DIALOGUE STATE
-//		if(gp.gameState == gp.gameOverState){
-//			drawGameOverScene();
-//			gp.gameThread = null;
-//			if (!hasWrittenPlaytimeToFile) {
-//		        // Writing playtime to a text file
-//		        writePlaytimeToFile(playTime);
-//
-//		        hasWrittenPlaytimeToFile = true; // Marking that playtime has been written
-//		    }
-//		}
 		
 		// TRADE STATE
 		if (gp.gameState == gp.qnaState) {

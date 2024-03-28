@@ -38,22 +38,6 @@ public class EntityManager {
 		// Player
 		gp.player.draw(g2);
 		
-        // Draw NPCs
-//        for (Entity entity : entityList) {
-//        	if (entity instanceof Player) {
-//                // Draw player
-//                Player player = (Player) entity;
-//                player.draw(g2);
-//        	}
-//        	else if (entity instanceof NPC_OldMan) {
-//            	NPC_OldMan npcOldMan = (NPC_OldMan) entity;
-//            	npcOldMan.draw(g2);
-//            }
-//        	else if (entity instanceof NPC_Merchant) {
-//        		NPC_Merchant npcMerchant = (NPC_Merchant) entity;
-//        		npcMerchant.draw(g2);
-//            }
-//        }
     }
 
     public void updateAll() {
@@ -65,22 +49,6 @@ public class EntityManager {
 				gp.npc[i].update();
 			}
 		}
-//        // Draw NPCs
-//        for (Entity entity : entityList) {
-//        	if (entity instanceof Player) {
-//                // Draw player
-//                Player player = (Player) entity;
-//                player.update();
-//        	}
-//        	else if (entity instanceof NPC_OldMan) {
-//            	NPC_OldMan npcOldMan = (NPC_OldMan) entity;
-//            	npcOldMan.update();
-//            }
-//        	else if (entity instanceof NPC_Merchant) {
-//        		NPC_Merchant npcMerchant = (NPC_Merchant) entity;
-//        		npcMerchant.update();
-//            }
-//        }
     }
     
     public void clearAll() {
@@ -110,5 +78,4 @@ public class EntityManager {
 		gp.aSetter.setObject();
 		gp.aSetter.setNPC();
     }
-    // Add other methods as needed
 }

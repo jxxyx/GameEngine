@@ -10,15 +10,16 @@ import java.awt.Graphics2D;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager extends Scene{
+public class TileManager{
 	
+	GamePanel gp;
 	public Tile[] tile;
 	public int MapTileNum[][];
 	
 	
 	// Constructor
 	public TileManager(GamePanel gp) {
-		super(gp);
+		this.gp = gp;
 		
 		tile = new Tile[10];
 		MapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
@@ -120,7 +121,6 @@ public class TileManager extends Scene{
 	}
 
 	// Create draw method to draw the tiles
-	@Override
 	public void draw(Graphics2D g2){
 		
 		int worldCol = 0;
