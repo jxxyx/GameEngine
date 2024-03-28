@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public AssetSetter aSetter = new AssetSetter(this);
 	public EntityManager entityManager = new EntityManager(this);
 	public UI ui = new UI(this);
+	public SceneManager sceneManager = new SceneManager(this, playerControl);
 	public MenuPanel mp = new MenuPanel(this);
 	public LeaderboardPanel lp = new LeaderboardPanel(this);
 	public LevelPanel glp = new LevelPanel(this);
@@ -220,13 +221,19 @@ public class GamePanel extends JPanel implements Runnable{
 	public void drawToTempScreen() {
 		// TITLE SCREEN
 		if(gameState == titleState) {
-			mp.draw(g2);
+//			mp.draw(g2);
+			sceneManager.setMenuScene();
+			sceneManager.draw(g2);
 		}
 		else if(gameState == leaderboardState) {
-			lp.draw(g2);
+//			lp.draw(g2);
+			sceneManager.setLeaderboardScene();
+			sceneManager.draw(g2);
 		}
 		else if(gameState == gameLevelState) {
-			glp.draw(g2);
+//			glp.draw(g2);
+			sceneManager.setLevelScene();
+			sceneManager.draw(g2);
 		}
 		// OTHERS
 		else {

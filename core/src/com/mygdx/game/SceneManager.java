@@ -9,11 +9,7 @@ import Scene.LevelPanel;
 import Scene.MenuPanel;
 import Scene.Scene;
 
-public class SceneManager extends JPanel {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+public class SceneManager{
     private GamePanel gp;
     private Scene currentScene;
     public MenuPanel menuPanel;
@@ -24,11 +20,7 @@ public class SceneManager extends JPanel {
     public SceneManager(GamePanel gp, PlayerControl playerControl) {
         this.gp = gp;
         this.playerControl = playerControl;
-        menuPanel = new MenuPanel(gp);
-        levelPanel = new LevelPanel(gp);
-        leaderboardPanel = new LeaderboardPanel(gp);
         currentScene = menuPanel; // Set the initial scene to the menu scene
-        this.addKeyListener(playerControl);
     }
     
     public Scene getScene() {
@@ -41,15 +33,15 @@ public class SceneManager extends JPanel {
     
 
     public void setMenuScene() {
-        currentScene = menuPanel;
+        currentScene = gp.mp;
     }
 
     public void setLevelScene() {
-        currentScene = levelPanel;
+        currentScene = gp.glp;
     }
 
     public void setLeaderboardScene() {
-        currentScene = leaderboardPanel;
+        currentScene = gp.lp;
     }
 }
 
