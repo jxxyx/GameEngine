@@ -40,6 +40,7 @@ public class NPC_Merchant extends Entity{
 		dialogues[2][0] = "Solve them to obtain keys \nwhich can unlock doors!";
 		dialogues[3][0] = "Goodluck!";
 	}
+	
 	public void speak() {
 		super.speak();
 		gp.ui.currentDialogue = dialogues[dialogueIndex][0];

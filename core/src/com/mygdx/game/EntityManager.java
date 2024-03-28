@@ -4,14 +4,19 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import entity.Entity;
+import entity.NPC_Merchant;
+import entity.NPC_OldMan;
 import entity.Player;
 
 public class EntityManager {
+	GamePanel gp;
+	AssetSetter aSetter;
 
-    private List<Entity> entityList;
+    public List<Entity> entityList;
 
-    public EntityManager() {
+    public EntityManager(GamePanel gp) {
         this.entityList = new ArrayList<>();
+        this.gp = gp;
     }
 
     public void addEntity(Entity entity) {
@@ -23,15 +28,59 @@ public class EntityManager {
     }
 
     public void drawAll(Graphics2D g2) {
-        for (Entity entity : entityList) {
-            entity.draw(g2);
-        }
+		// NPC
+		for(int i = 0; i < gp.npc.length; i++) {
+			if (gp.npc[i] != null) {
+				gp.npc[i].draw(g2);
+			}
+		}
+
+		// Player
+		gp.player.draw(g2);
+		
+        // Draw NPCs
+//        for (Entity entity : entityList) {
+//        	if (entity instanceof Player) {
+//                // Draw player
+//                Player player = (Player) entity;
+//                player.draw(g2);
+//        	}
+//        	else if (entity instanceof NPC_OldMan) {
+//            	NPC_OldMan npcOldMan = (NPC_OldMan) entity;
+//            	npcOldMan.draw(g2);
+//            }
+//        	else if (entity instanceof NPC_Merchant) {
+//        		NPC_Merchant npcMerchant = (NPC_Merchant) entity;
+//        		npcMerchant.draw(g2);
+//            }
+//        }
     }
 
     public void updateAll() {
-        for (Entity entity : entityList) {
-            entity.update();
-        }
+    	
+		gp.player.update();
+		// NPC
+		for (int i = 0; i < gp.npc.length; i++) {
+			if (gp.npc[i] != null) {
+				gp.npc[i].update();
+			}
+		}
+//        // Draw NPCs
+//        for (Entity entity : entityList) {
+//        	if (entity instanceof Player) {
+//                // Draw player
+//                Player player = (Player) entity;
+//                player.update();
+//        	}
+//        	else if (entity instanceof NPC_OldMan) {
+//            	NPC_OldMan npcOldMan = (NPC_OldMan) entity;
+//            	npcOldMan.update();
+//            }
+//        	else if (entity instanceof NPC_Merchant) {
+//        		NPC_Merchant npcMerchant = (NPC_Merchant) entity;
+//        		npcMerchant.update();
+//            }
+//        }
     }
     
     public void clearAll() {
@@ -44,6 +93,8 @@ public class EntityManager {
                 player.hasKey = 0;
             	}
             }
+		gp.aSetter.setObject();
+		gp.aSetter.setNPC();
     }
     
     public void resetAll() {
@@ -56,6 +107,8 @@ public class EntityManager {
                 player.hasKey = 0;
             }
         }
+		gp.aSetter.setObject();
+		gp.aSetter.setNPC();
     }
     // Add other methods as needed
 }

@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 	customSound SE = new customSound();
 	public CollisionManager cChecker = new CollisionManager(this);
 	public AssetSetter aSetter = new AssetSetter(this);
-	public EntityManager entityManager = new EntityManager();
+	public EntityManager entityManager = new EntityManager(this);
 	public UI ui = new UI(this);
 	public MenuPanel mp = new MenuPanel(this);
 	public LeaderboardPanel lp = new LeaderboardPanel(this);
@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 	// ENTITY OBJECT
 	public Player player = new Player(this, playerControl);
-	public SuperObject obj[] = new SuperObject[20];
+	public SuperObject obj[] = new SuperObject[9];
 	public Entity npc[] = new Entity[10];
 	
 	// Game state
@@ -112,7 +112,7 @@ public class GamePanel extends JPanel implements Runnable{
                 entityManager.addEntity(npcEntity);
             }
         }
-
+		System.out.println(entityManager.entityList);
 		tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) tempScreen.getGraphics();
 
@@ -127,8 +127,12 @@ public class GamePanel extends JPanel implements Runnable{
 
 	    // Reset player variables and state
 	    entityManager.resetAll();
-		aSetter.setObject();
-		aSetter.setNPC();
+	    
+//	    player.setDefaultValues();
+//	    player.resetDialogueIndex();
+//	    player.inventory.clear();
+//		aSetter.setObject();
+//		aSetter.setNPC();
 
 	    
 		ui.resetUIVariables();
@@ -136,8 +140,8 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void quitToMainMenu() {
 		entityManager.clearAll();
-		aSetter.setObject();
-		aSetter.setNPC();
+//		aSetter.setObject();
+//		aSetter.setNPC();
 		
 		ui.resetUIVariables();
 
@@ -199,6 +203,13 @@ public class GamePanel extends JPanel implements Runnable{
 		if(gameState == playState) {
 			// PLAYER
 			entityManager.updateAll();		
+//			player.update();
+//			// NPC
+//			for (int i = 0; i < npc.length; i++) {
+//				if (npc[i] != null) {
+//					npc[i].update();
+//				}
+//			}
 }
 		
 		if(gameState == pauseState) {
@@ -229,7 +240,17 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 			
+//			// NPC
+//			for(int i = 0; i < npc.length; i++) {
+//				if (npc[i] != null) {
+//					npc[i].draw(g2);
+//				}
+//			}
+//
+//			// Player
+//			player.draw(g2);
 			// Player and NPC
+			
 			entityManager.drawAll(g2);
 			
 			// UI

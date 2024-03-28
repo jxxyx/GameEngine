@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.mygdx.game.GamePanel;
 
-public class SuperObject {
+public class SuperObject{
     
     public BufferedImage image;
     public String name;
@@ -24,7 +24,12 @@ public class SuperObject {
     public final int type_all = 0;
     public final int type_number = 1;
     public final int type_object = 2;
-
+    
+    
+    public interface ObjectFactory {
+        SuperObject createObject();
+    }
+    
     // Getter for type
     public int getType() {
         return type;
