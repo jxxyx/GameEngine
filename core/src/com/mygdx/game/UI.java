@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.Image;
+import java.awt.FontMetrics;
 
 import entity.Entity;
 
@@ -79,13 +80,51 @@ public class UI {
 			g2.setColor(Color.white);
 			g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
 			g2.drawString("x " + gp.player.hasKey, 74, 65);
-			
+
 			// TIME
 			if (gp.gameState != gp.optionsState && gp.gameState != gp.characterState) {
 				playTime += (double)1/60;
 				g2.drawString("Time:" + dFormat.format(playTime), gp.tileSize*14, 65);
 			}
+			
+			
+			if (gp.gameState == gp.playState) {
+				// C FOR INVENTORY
+				int frameX = gp.tileSize*6;
+				int frameY = gp.tileSize*10;
+				int frameWidth = gp.tileSize*4;
+				int frameHeight = gp.tileSize*1; 
+				drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
+				String text = "[C] Inventory";
+				g2.setFont(new Font("default", Font.BOLD, 13)); // Set smaller font size
+				FontMetrics fm = g2.getFontMetrics();
+				int textWidth = fm.stringWidth(text);
+				int textHeight = fm.getHeight();
+
+				int textX = frameX + (frameWidth - textWidth) / 2;
+				int textY = frameY + (frameHeight - textHeight) / 2 + fm.getAscent();
+
+				g2.drawString(text, textX, textY);
+
+				// ESC FOR OPTIONS
+				frameX += 4*gp.tileSize;
+				frameWidth = gp.tileSize*4;
+				frameHeight = gp.tileSize*1; 
+				drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+				text = "[ESC] Options";
+				// g2.setFont(new Font("default", Font.BOLD, 13)); // Set smaller font size
+				fm = g2.getFontMetrics();
+				textWidth = fm.stringWidth(text);
+				textHeight = fm.getHeight();
+
+				textX = frameX + (frameWidth - textWidth) / 2;
+				textY = frameY + (frameHeight - textHeight) / 2 + fm.getAscent();
+
+				g2.drawString(text, textX, textY);
+				g2.setFont(arial_40);
+			}
 			
 			// MESSAGE
 			if(messageOn == true) {
@@ -193,7 +232,6 @@ public class UI {
 		x += gp.tileSize;
 		y += gp.tileSize;
 
-		
 		if (currentDialogue != null ) {
 			for(String line: currentDialogue.split("\n")){
 				g2.drawString(line, x, y);
@@ -201,14 +239,32 @@ public class UI {
 			}
 		}
 
+		// ENTER FOR DIALOGUE
+		x = gp.tileSize*8;
+		y = gp.tileSize*10;
+		int frameWidth = gp.tileSize*4;
+		int frameHeight = gp.tileSize*1; 
+		drawSubWindow(x, y, frameWidth, frameHeight);
+
+		String text = "[ENTER]";
+		g2.setFont(new Font("default", Font.BOLD, 13)); // Set smaller font size
+		FontMetrics fm = g2.getFontMetrics();
+		int textWidth = fm.stringWidth(text);
+		int textHeight = fm.getHeight();
+
+		int textX = x + (frameWidth - textWidth) / 2;
+		int textY = y + (frameHeight - textHeight) / 2 + fm.getAscent();
+
+		g2.drawString(text, textX, textY);
+		g2.setFont(arial_40);
+
 	}
 
 	public void drawCharacterScreen() {
-		final int frameX = gp.tileSize*2;
-		final int frameY = gp.tileSize;
-		final int framWidth = gp.tileSize*5;
+		int frameX = gp.tileSize*2;
+		int frameY = gp.tileSize;
+		final int frameWidth = gp.tileSize*5;
 		final int frameHeight = gp.tileSize*10;
-		drawSubWindow(frameX, frameY, framWidth, frameHeight);
 	}
 
 	public void drawSubWindow(int x, int y, int width, int height) {
@@ -227,9 +283,9 @@ public class UI {
 		//frame
 		final int frameX = gp.tileSize*12;
 		final int frameY = gp.tileSize;
-		final int framWidth = gp.tileSize*6;
+		final int frameWidth = gp.tileSize*6;
 		final int frameHeight = gp.tileSize*5;
-		drawSubWindow(frameX, frameY, framWidth, frameHeight);
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 
 		//slot
 		final int slotXstart = frameX + 20;
@@ -273,9 +329,9 @@ public class UI {
 		// description frame
 		int dFrameX = frameX;
 		int dFrameY = frameY + frameHeight;
-		int dFrameWidth = framWidth;
+		int dframeWidth = frameWidth;
 		int dFrameHeight = gp.tileSize*3;
-		drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+		drawSubWindow(dFrameX, dFrameY, dframeWidth, dFrameHeight);
 
 		//draw description text
 		int textX = dFrameX + 20;
@@ -301,6 +357,26 @@ public class UI {
 			}
 			g2.drawString(currentLine, textX, textY);
 		}
+		// C FOR EXIT
+
+				int x = gp.tileSize*6;
+				int y = gp.tileSize*10;
+				int width = gp.tileSize*4;
+				int height = gp.tileSize*1; 
+				drawSubWindow(x, y, width, height);
+
+				String text = "[C] EXIT";
+				Font originalFont = g2.getFont();
+				g2.setFont(new Font("default", Font.BOLD, 13)); // Set smaller font size
+				FontMetrics fm = g2.getFontMetrics();
+				int textWidth = fm.stringWidth(text);
+				int textHeight = fm.getHeight();
+
+				textX = x + (width - textWidth) / 2;
+				textY = y + (height - textHeight) / 2 + fm.getAscent();
+
+				g2.drawString(text, textX, textY);
+				g2.setFont(originalFont);
 
 	}
 
@@ -384,6 +460,26 @@ public class UI {
 		    }
 		}
 
+		// ESC FOR BACK
+		x = gp.tileSize*1;
+		y = gp.tileSize*10;
+		width = gp.tileSize*4;
+		height = gp.tileSize*1; 
+		drawSubWindow(x, y, width, height);
+
+		String text = "[ESC] BACK";
+		Font originalFont = g2.getFont();
+		g2.setFont(new Font("default", Font.BOLD, 13)); // Set smaller font size
+		FontMetrics fm = g2.getFontMetrics();
+		int textWidth = fm.stringWidth(text);
+		int textHeight = fm.getHeight();
+
+		int textX = x + (width - textWidth) / 2;
+		int textY = y + (height - textHeight) / 2 + fm.getAscent();
+
+		g2.drawString(text, textX, textY);
+		g2.setFont(originalFont);
+
 		// DRAW ANSWER WINDOW
 		
 		String stringvalue = "";
@@ -403,8 +499,6 @@ public class UI {
 				stringvalue = values.toString();
 				g2.drawString("Your answer: " + stringvalue, x+24, y+60);
 			}
-			System.out.println("stringvalue: " + stringvalue);
-			System.out.println("dialogue: " + gp.player.dialogues[gp.player.dialogueIndex][1]);
 			if (Integer.parseInt(stringvalue) == Integer.parseInt(gp.player.dialogues[gp.player.dialogueIndex][1])) {
 				gp.player.currentNumber.clear();
 				gp.player.dialogueIndex++;
