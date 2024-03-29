@@ -41,7 +41,7 @@ public class Player extends Entity{
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
 		//Collision part
-		solidArea = new Rectangle(8, 16, 32, 32);
+		solidArea = new Rectangle(12, 16, 28, 28);
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
@@ -248,7 +248,7 @@ public class Player extends Entity{
 		dialogues[0][0] = "Q1:What is 2 raised to \nthe power of 4";
 		dialogues[0][1] = "16";
 
-		dialogues[1][0] = "Q2:What is the squareroot of 64";
+		dialogues[1][0] = "Q2:What is the squareroot \nof 64";
 		dialogues[1][1] = "8";
 
 		dialogues[2][0] = "Q3:What is 12 x 35";
