@@ -347,7 +347,7 @@ public class UI {
 			g2.drawString(currentLine, textX, textY);
 		}
 		// C FOR EXIT
-
+				if (gp.gameState == gp.characterState) {
 				int x = gp.tileSize*6;
 				int y = gp.tileSize*10;
 				int width = gp.tileSize*4;
@@ -366,6 +366,7 @@ public class UI {
 
 				g2.drawString(text, textX, textY);
 				g2.setFont(originalFont);
+				}
 
 	}
 
