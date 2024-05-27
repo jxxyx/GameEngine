@@ -64,7 +64,6 @@ public class GamePanel extends JPanel implements Runnable{
 	public MenuPanel mp = new MenuPanel(this);
 	public LeaderboardPanel lp = new LeaderboardPanel(this);
 	public LevelPanel glp = new LevelPanel(this);
-	public test;
 	Thread gameThread;
 
 	// ENTITY OBJECT
